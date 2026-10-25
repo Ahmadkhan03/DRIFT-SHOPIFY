@@ -1,0 +1,168 @@
+/*
+ * DRIFT template (generated). Safe to edit in the Shopify theme editor.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "drift-faq",
+      "settings": {
+        "title": "FAQ"
+      },
+      "blocks": {
+        "g0": {
+          "type": "group",
+          "settings": {
+            "title": "Orders & payment"
+          }
+        },
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How do I pay?",
+            "answer": "<p>Cash on Delivery is available on every order across Pakistan. You can also pay online by bank transfer or Easypaisa at checkout. Card payments through Safepay are coming soon.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Why did DRIFT call or message me after I ordered?",
+            "answer": "<p>We confirm every Cash on Delivery order before it ships, to make sure the address and phone are right. If we can't reach you within 48 hours, the order may be cancelled.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>Yes, before it ships. WhatsApp us your order number on <a href=\"https://wa.me/923711322476\">+92 371 1322476</a>. Once it has shipped you can exchange it after delivery instead.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How do I use a discount code?",
+            "answer": "<p>Enter it in the “Discount code” box at checkout and tap Apply. Only one code can be used per order.</p>"
+          }
+        },
+        "g5": {
+          "type": "group",
+          "settings": {
+            "title": "Delivery"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "How much is delivery?",
+            "answer": "<p>Delivery charges are shown at checkout before you place your order.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Orders are dispatched within 1–2 working days of confirmation. Delivery takes 2–4 working days to major cities and 4–7 working days elsewhere. <a href=\"/policies/shipping-policy\">More on shipping</a>.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Use <a href=\"/pages/track-order\">Track your order</a>: sign in with your email to see your orders, or send us your order number on WhatsApp. We also send the courier tracking number once it ships.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "question": "Can I open the parcel before paying?",
+            "answer": "<p>Courier policy doesn't allow it, but if anything is wrong once you open it, message us within 48 hours with photos and we'll make it right.</p>"
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship outside Pakistan?",
+            "answer": "<p>Not yet. We currently deliver within Pakistan only.</p>"
+          }
+        },
+        "g11": {
+          "type": "group",
+          "settings": {
+            "title": "Sizing & products"
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "question": "How do your clothes fit?",
+            "answer": "<p>Our hoodies and sweatshirts are boxy and oversized. Take your usual size for the intended fit, or one size down for a regular fit. See the <a href=\"/pages/size-guide\">size guide</a>.</p>"
+          }
+        },
+        "q13": {
+          "type": "question",
+          "settings": {
+            "question": "What does Unisex mean?",
+            "answer": "<p>Unisex pieces are designed to be worn by anyone and appear in both the Men and Women sections. Sizing is the same for everyone.</p>"
+          }
+        },
+        "q14": {
+          "type": "question",
+          "settings": {
+            "question": "How should I wash my DRIFT pieces?",
+            "answer": "<p>Wash cold, inside out, with similar colours. Don't tumble dry; dry flat or hang in the shade. Iron inside out, not directly on prints.</p>"
+          }
+        },
+        "q15": {
+          "type": "question",
+          "settings": {
+            "question": "A size I want is sold out. Will it come back?",
+            "answer": "<p>Popular sizes are often restocked. <a href=\"https://wa.me/923711322476\">Message us</a> and we'll let you know, or join our newsletter to hear about restocks first.</p>"
+          }
+        },
+        "g16": {
+          "type": "group",
+          "settings": {
+            "title": "Returns & refunds"
+          }
+        },
+        "q17": {
+          "type": "question",
+          "settings": {
+            "question": "Can I exchange for a different size?",
+            "answer": "<p>Yes, within 7 days of delivery if the item is unworn with tags. <a href=\"/policies/refund-policy\">See the returns &amp; refunds policy</a>.</p>"
+          }
+        },
+        "q18": {
+          "type": "question",
+          "settings": {
+            "question": "I received a wrong or damaged item. What now?",
+            "answer": "<p>WhatsApp us within 48 hours of delivery with your order number and photos. We'll replace it or refund you, and cover the delivery costs.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "g0",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "g5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "g11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "g16",
+        "q17",
+        "q18"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

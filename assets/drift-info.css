@@ -1,0 +1,102 @@
+/* DRIFT info pages (about, contact, FAQ, size guide, track order, policies) */
+.drift-info { padding-block: 40px 96px; }
+@media (min-width: 750px) { .drift-info { padding-top: 64px; } }
+.drift-info__head { max-width: 56rem; }
+.drift-info__intro { margin-top: 20px; max-width: 40rem; font-size: 17px; line-height: 1.6; color: var(--drift-ink-soft); }
+.drift-info__intro p { margin: 0; }
+.drift-info__body { display: grid; gap: 40px; margin-top: 48px; padding-top: 40px; border-top: 1px solid rgb(17 16 16 / .12); }
+@media (min-width: 990px) { .drift-info__body { grid-template-columns: 220px minmax(0, 1fr); gap: 64px; } }
+.drift-info__nav { order: 2; }
+@media (min-width: 990px) { .drift-info__nav { order: 0; position: sticky; top: 110px; align-self: start; } }
+.drift-info__navhead { color: var(--drift-muted); margin: 0 0 12px; }
+.drift-info__nav ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; font-size: 14px; }
+.drift-info__nav a { color: var(--drift-ink-soft); text-decoration: none; }
+.drift-info__nav a:hover, .drift-info__nav a[aria-current] { color: var(--drift-ink); text-decoration: underline; text-underline-offset: 4px; }
+
+.drift-prose { max-width: 44rem; font-size: 15px; line-height: 1.75; color: var(--drift-ink-soft); }
+.drift-prose h2, .drift-prose h3 { color: var(--drift-ink); margin: 40px 0 12px; font-size: 36px; line-height: .9; }
+.drift-prose h3 { font-size: 26px; }
+.drift-prose h2:first-child { margin-top: 0; }
+.drift-prose p { margin: 0 0 14px; }
+.drift-prose ul, .drift-prose ol { padding-left: 20px; margin: 0 0 14px; }
+.drift-prose li { margin-bottom: 6px; }
+.drift-prose a { color: var(--drift-ink); text-decoration: underline; text-underline-offset: 3px; }
+.drift-prose strong { color: var(--drift-ink); }
+.drift-prose table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+.drift-prose th, .drift-prose td { border-bottom: 1px solid rgb(17 16 16 / .1); padding: 10px 8px; text-align: left; }
+
+/* Contact / track cards */
+.drift-cards { display: grid; gap: 12px; margin-bottom: 40px; }
+@media (min-width: 640px) { .drift-cards { grid-template-columns: 1fr 1fr; } }
+.drift-card-box { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; padding: 24px; border: 1px solid rgb(17 16 16 / .15); color: var(--drift-ink-soft); text-decoration: none; font-size: 14px; font-style: normal; transition: border-color .3s, background-color .3s; }
+a.drift-card-box:hover { border-color: var(--drift-ink); }
+.drift-card-box .drift-label { color: var(--drift-muted); font-size: 10px; }
+.drift-card-box a { color: inherit; }
+.drift-card-box__big { font-family: 'DRIFT Display', sans-serif; font-stretch: 62%; font-variation-settings: 'wdth' 62; font-weight: 900; text-transform: uppercase; font-size: 36px; line-height: .95; color: var(--drift-ink); font-style: normal; }
+.drift-card-box--wa { background: rgb(37 211 102 / .1); border-color: transparent; }
+.drift-card-box--wa:hover { background: rgb(37 211 102 / .2); }
+.drift-card-box--wide { grid-column: 1 / -1; }
+.drift-card-box--dark { background: var(--drift-ink); color: rgb(244 241 236 / .8); border-color: var(--drift-ink); }
+.drift-card-box--dark .drift-card-box__big { color: var(--drift-bone); }
+.drift-card-box--dark:hover { background: var(--drift-maroon); border-color: var(--drift-maroon); }
+
+/* Forms */
+.drift-form { display: grid; gap: 8px; max-width: 32rem; margin: 16px 0 40px; }
+.drift-form input, .drift-form textarea { width: 100%; padding: 14px 16px; border: 1px solid rgb(17 16 16 / .2); background: transparent; font: inherit; font-size: 15px; outline: none; }
+.drift-form input:focus, .drift-form textarea:focus { border-color: var(--drift-ink); }
+.drift-form .drift-btn { justify-self: start; }
+.drift-form--compact { margin: 0; }
+.drift-form__label { margin: 0 0 4px; color: var(--drift-muted); }
+
+/* FAQ */
+.drift-faq { max-width: 48rem; }
+.drift-faq__group { margin: 48px 0 8px; font-size: 40px; }
+.drift-faq__group:first-child { margin-top: 0; }
+.drift-faq__item { border-bottom: 1px solid rgb(17 16 16 / .12); }
+.drift-faq__item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 16px; font-weight: 500; }
+.drift-faq__item summary::-webkit-details-marker { display: none; }
+.drift-faq__item summary::after { content: '+'; flex: none; font-size: 18px; line-height: 1; transition: transform .3s; }
+.drift-faq__item[open] summary::after { transform: rotate(45deg); }
+
+/* Size guide */
+.drift-unit--page { margin-bottom: 32px; }
+.drift-unit--page button { padding: 8px 16px; }
+.drift-chart--page { margin-bottom: 48px; max-width: 44rem; }
+.drift-chart__title { margin: 0 0 6px; font-size: 36px; }
+.drift-chart__note { margin: 0 0 16px; color: var(--drift-ink-soft); font-size: 14px; }
+
+/* About */
+.drift-about__hero { position: relative; height: 80svh; min-height: 480px; overflow: hidden; background: var(--drift-ink); color: var(--drift-bone); }
+.drift-about__hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .7; filter: grayscale(1); }
+.drift-about__hero-text { position: absolute; inset-inline: 0; bottom: 48px; }
+.drift-about__hero-text p { color: rgb(244 241 236 / .7); margin: 0 0 12px; }
+.drift-about__hero-text h1 { margin: 0; max-width: 14ch; font-size: 16vw; color: var(--drift-bone); }
+@media (min-width: 750px) { .drift-about__hero-text h1 { font-size: 9vw; } }
+.drift-about__story { display: grid; gap: 32px; padding-block: 80px; }
+@media (min-width: 990px) { .drift-about__story { grid-template-columns: 1fr 1fr; padding-block: 128px; } }
+.drift-about__copy { font-size: 17px; line-height: 1.75; color: var(--drift-ink-soft); }
+.drift-about__copy p { margin: 0 0 16px; }
+.drift-about__image { grid-column: 1 / -1; aspect-ratio: 16 / 9; overflow: hidden; }
+.drift-about__image img { width: 100%; height: 100%; object-fit: cover; }
+.drift-pillars { display: grid; grid-template-columns: 1fr; border-block: 1px solid rgb(17 16 16 / .12); }
+@media (min-width: 640px) { .drift-pillars { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 990px) { .drift-pillars { grid-template-columns: repeat(4, 1fr); } }
+.drift-pillars__item { padding: 32px 24px; border-bottom: 1px solid rgb(17 16 16 / .12); }
+@media (min-width: 990px) { .drift-pillars__item { border-bottom: 0; border-right: 1px solid rgb(17 16 16 / .12); padding: 48px 32px; } .drift-pillars__item:last-child { border-right: 0; } }
+.drift-pillars__item h3 { margin: 16px 0 0; font-size: 40px; line-height: .9; }
+.drift-pillars__item p { margin: 12px 0 0; font-size: 14px; color: var(--drift-ink-soft); }
+.drift-pillars__item .drift-mono { margin: 0; font-size: 12px; }
+.drift-about__cta { background: var(--drift-maroon); color: var(--drift-bone); padding-block: 80px; display: flex; flex-direction: column; gap: 20px; }
+.drift-about__cta .drift-label { color: rgb(244 241 236 / .7); margin: 0; }
+.drift-about__cta-title { margin: 0; font-family: 'DRIFT Display', sans-serif; font-stretch: 62%; font-variation-settings: 'wdth' 62; font-weight: 900; text-transform: uppercase; font-size: 60px; line-height: .88; max-width: 14ch; }
+@media (min-width: 750px) { .drift-about__cta-title { font-size: 80px; } }
+.drift-about__cta-text { margin: 0; max-width: 28rem; color: rgb(244 241 236 / .8); }
+
+/* Shopify's own policy pages (Shipping, Refund, Privacy, Terms) in DRIFT style */
+.shopify-policy__container { max-width: 48rem; margin: 0 auto; padding: 48px 16px 96px; font-size: 15px; line-height: 1.75; color: var(--drift-ink-soft); }
+.shopify-policy__title h1 { margin: 0 0 32px; font-size: 15vw; line-height: .85; color: var(--drift-ink); }
+@media (min-width: 750px) { .shopify-policy__title h1 { font-size: 96px; } }
+.shopify-policy__body h2, .shopify-policy__body h3 { color: var(--drift-ink); margin: 40px 0 12px; font-size: 32px; line-height: .9; }
+.shopify-policy__body p { margin: 0 0 14px; }
+.shopify-policy__body ul { padding-left: 20px; }
+.shopify-policy__body a { color: var(--drift-ink); text-decoration: underline; text-underline-offset: 3px; }

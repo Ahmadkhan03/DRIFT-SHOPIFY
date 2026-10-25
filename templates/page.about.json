@@ -1,0 +1,60 @@
+/*
+ * DRIFT template (generated). Safe to edit in the Shopify theme editor.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "drift-about",
+      "settings": {
+        "hero": "shopify://shop_images/drift-about-hero.webp",
+        "title": "Made in Pakistan. Worn everywhere.",
+        "story_eyebrow": "Why DRIFT",
+        "story_title": "Streetwear that lasts past the trend",
+        "story": "<p>DRIFT started with a simple frustration: great streetwear was either imported and overpriced, or local and made to fall apart after a few washes. We wanted pieces that felt premium, fit the way we like to wear them, and were made right here at home.</p><p>So we went back to basics: heavyweight cotton, boxy cuts, clean graphics and details you notice the longer you own them. Every piece is developed and produced in Pakistan, in small runs, so we can get it right.</p><p>The name is the idea. Move at your own pace, find your own lane, and wear something that moves with you.</p>",
+        "story_image": "shopify://shop_images/drift-about-story.webp",
+        "cta_eyebrow": "Collection 01",
+        "cta_title": "This is only the first drop.",
+        "cta_text": "Hoodies, sweatshirts and trousers, cut for men and women alike."
+      },
+      "blocks": {
+        "p0": {
+          "type": "pillar",
+          "settings": {
+            "title": "Heavyweight, always",
+            "text": "Thick, soft fleece that holds its shape and gets better with every wear."
+          }
+        },
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "title": "Made in Pakistan",
+            "text": "Cut, sewn and finished locally, working with workshops we know by name."
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "title": "Fewer, better drops",
+            "text": "Small runs, not endless restocks. When a piece is gone, the next one is worth waiting for."
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "title": "For everyone",
+            "text": "Oversized, unisex silhouettes made to be worn and styled your own way."
+          }
+        }
+      },
+      "block_order": [
+        "p0",
+        "p1",
+        "p2",
+        "p3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

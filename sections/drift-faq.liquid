@@ -1,0 +1,42 @@
+{%- comment -%} FAQ: groups of questions in accordions. Add "Group heading" and "Question" blocks in order. {%- endcomment -%}
+<div class="drift-info drift-wrap">
+  <header class="drift-info__head">
+    <p class="drift-label drift-accent">Help</p>
+    <h1 class="drift-collection__title">{{ section.settings.title }}</h1>
+    {%- if section.settings.intro != blank -%}<div class="drift-info__intro">{{ section.settings.intro }}</div>{%- endif -%}
+  </header>
+  <div class="drift-info__body">
+    {%- render 'drift-info-nav' -%}
+    <div class="drift-faq">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'group' -%}
+            <h2 class="drift-faq__group" {{ block.shopify_attributes }}>{{ block.settings.title }}</h2>
+          {%- when 'question' -%}
+            <details class="drift-faq__item" {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question }}</summary>
+              <div class="drift-rte">{{ block.settings.answer }}</div>
+            </details>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT FAQ",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "FAQ" },
+    { "type": "richtext", "id": "intro", "label": "Intro" }
+  ],
+  "blocks": [
+    { "type": "group", "name": "Group heading", "settings": [{ "type": "text", "id": "title", "label": "Heading", "default": "Orders & payment" }] },
+    { "type": "question", "name": "Question", "settings": [
+      { "type": "text", "id": "question", "label": "Question", "default": "How do I pay?" },
+      { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer here.</p>" }
+    ] }
+  ]
+}
+{% endschema %}

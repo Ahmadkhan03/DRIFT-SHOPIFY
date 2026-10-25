@@ -1,0 +1,61 @@
+{%- comment -%}
+  Size guide: every product's garment measurements (inches / cm switch) plus the
+  body chest guide. Each chart is a "Size chart" block, same format as the product page.
+{%- endcomment -%}
+<drift-size-guide class="drift-info drift-wrap">
+  <header class="drift-info__head">
+    <p class="drift-label drift-accent">Help</p>
+    <h1 class="drift-collection__title">{{ section.settings.title }}</h1>
+    <div class="drift-info__intro">{{ section.settings.intro }}</div>
+  </header>
+  <div class="drift-info__body">
+    {%- render 'drift-info-nav' -%}
+    <div>
+      <div class="drift-unit drift-unit--page" role="group" aria-label="Units">
+        <button type="button" class="is-active" data-unit-btn="in">Inches</button>
+        <button type="button" data-unit-btn="cm">Centimetres</button>
+      </div>
+      {%- for block in section.blocks -%}
+        <div class="drift-chart drift-chart--page" {{ block.shopify_attributes }}>
+          <h2 class="drift-chart__title">{{ block.settings.title }}</h2>
+          {%- if block.settings.note != blank -%}<p class="drift-chart__note">{{ block.settings.note }}</p>{%- endif -%}
+          {%- assign chart_sizes = block.settings.sizes | split: ',' -%}
+          {%- assign chart_rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+          <table>
+            <thead><tr><th></th>{%- for s in chart_sizes -%}<th>{{ s | strip }}</th>{%- endfor -%}</tr></thead>
+            <tbody>
+              {%- for row in chart_rows -%}
+                {%- assign parts = row | strip | split: ':' -%}
+                {%- if parts.size == 2 -%}
+                  {%- assign values = parts[1] | split: ',' -%}
+                  <tr><th>{{ parts[0] | strip }}</th>{%- for val in values -%}<td data-in="{{ val | strip }}">{{ val | strip }}</td>{%- endfor -%}</tr>
+                {%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- endfor -%}
+      <div class="drift-prose">{{ section.settings.howto }}</div>
+    </div>
+  </div>
+</drift-size-guide>
+
+{% schema %}
+{
+  "name": "DRIFT size guide",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Size guide" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Garment measurements, taken flat. Most DRIFT pieces are cut oversized: take your usual size for the intended fit, or one size down for a regular fit.</p>" },
+    { "type": "richtext", "id": "howto", "label": "How to measure / body guide" }
+  ],
+  "blocks": [
+    { "type": "chart", "name": "Size chart", "settings": [
+      { "type": "text", "id": "title", "label": "Product name", "default": "Hoodie" },
+      { "type": "text", "id": "note", "label": "Fit note" },
+      { "type": "text", "id": "sizes", "label": "Sizes", "default": "S, M, L" },
+      { "type": "textarea", "id": "rows", "label": "Measurements (inches)", "info": "One line per measurement: Name: value, value, value" }
+    ] }
+  ]
+}
+{% endschema %}

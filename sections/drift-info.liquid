@@ -1,0 +1,28 @@
+{%- comment -%}
+  DRIFT info page: eyebrow, big title, intro, side help menu, and the page's own
+  text (written in Shopify → Online Store → Pages). Used for policies-style pages.
+{%- endcomment -%}
+<div class="drift-info drift-wrap">
+  <header class="drift-info__head">
+    <p class="drift-label drift-accent">{{ section.settings.eyebrow }}</p>
+    <h1 class="drift-collection__title">{{ section.settings.title | default: page.title }}</h1>
+    {%- if section.settings.intro != blank -%}<div class="drift-info__intro">{{ section.settings.intro }}</div>{%- endif -%}
+  </header>
+  <div class="drift-info__body">
+    {%- render 'drift-info-nav' -%}
+    <div class="drift-prose">{{ page.content }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT info page",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small text above", "default": "Help" },
+    { "type": "text", "id": "title", "label": "Title (uses the page title if empty)" },
+    { "type": "richtext", "id": "intro", "label": "Intro" }
+  ],
+  "presets": [{ "name": "DRIFT info page" }]
+}
+{% endschema %}

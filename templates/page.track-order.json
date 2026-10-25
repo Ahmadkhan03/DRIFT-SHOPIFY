@@ -1,0 +1,19 @@
+/*
+ * DRIFT template (generated). Safe to edit in the Shopify theme editor.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "drift-track",
+      "settings": {
+        "title": "Track your order",
+        "intro": "<p>Your order number is in your order confirmation email and on the thank-you page (it starts with #).</p>",
+        "whatsapp": "923711322476",
+        "notes": "<h2>Good to know</h2><ul><li>Orders are dispatched within 1–2 working days of confirmation.</li><li>Once your order ships, we send you the courier and tracking number.</li><li>Cash on Delivery orders are confirmed by call or WhatsApp first, so keep your phone close.</li></ul>"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

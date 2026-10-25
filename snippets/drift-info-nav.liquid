@@ -1,0 +1,16 @@
+{% doc %}
+  Side menu shared by the DRIFT help / policy pages (like the live site's info pages).
+{% enddoc %}
+{%- liquid
+  assign here = request.path
+-%}
+<nav class="drift-info__nav" aria-label="Help">
+  <p class="drift-label drift-info__navhead">Help</p>
+  <ul>
+    {%- assign links = 'Track your order|/pages/track-order,Shipping policy|/policies/shipping-policy,Returns & refunds|/policies/refund-policy,Size guide|/pages/size-guide,Contact us|/pages/contact,FAQ|/pages/faq,Privacy policy|/policies/privacy-policy,Terms & conditions|/policies/terms-of-service' | split: ',' -%}
+    {%- for l in links -%}
+      {%- assign p = l | split: '|' -%}
+      <li><a href="{{ p[1] }}"{% if here == p[1] %} aria-current="page"{% endif %}>{{ p[0] }}</a></li>
+    {%- endfor -%}
+  </ul>
+</nav>

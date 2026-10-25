@@ -1,0 +1,47 @@
+{%- comment -%}
+  Track your order: sign in with email (Shopify shows every order and its status),
+  or send the order number on WhatsApp. Shipped orders also get a courier tracking number.
+{%- endcomment -%}
+{%- assign wa = section.settings.whatsapp | remove: '+' | remove: ' ' | remove: '-' -%}
+<div class="drift-info drift-wrap">
+  <header class="drift-info__head">
+    <p class="drift-label drift-accent">Order status</p>
+    <h1 class="drift-collection__title">{{ section.settings.title }}</h1>
+    <div class="drift-info__intro">{{ section.settings.intro }}</div>
+  </header>
+  <div class="drift-info__body">
+    {%- render 'drift-info-nav' -%}
+    <div>
+      <div class="drift-cards">
+        <a class="drift-card-box drift-card-box--dark" href="{{ routes.account_url }}">
+          <span class="drift-label">Option 1</span>
+          <span class="drift-card-box__big">Sign in with your email</span>
+          <span>We send a one-time code, no password needed. You'll see every order and its status →</span>
+        </a>
+        <div class="drift-card-box">
+          <span class="drift-label">Option 2</span>
+          <span class="drift-card-box__big">Ask us on WhatsApp</span>
+          <drift-wa-form class="drift-form drift-form--compact" data-wa="{{ wa }}" data-template="track">
+            <input name="order" placeholder="Order number, e.g. #1001" aria-label="Order number" required>
+            <input name="phone" type="tel" placeholder="Mobile number used at checkout" aria-label="Mobile number">
+            <button type="button" class="drift-btn drift-btn--dark">Send on WhatsApp</button>
+          </drift-wa-form>
+        </div>
+      </div>
+      <div class="drift-prose">{{ section.settings.notes }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT track order",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Track your order" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Your order number is in your order confirmation email and on the thank-you page (it starts with #).</p>" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number (digits, with 92)", "default": "923711322476" },
+    { "type": "richtext", "id": "notes", "label": "Notes" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,86 @@
+{%- comment -%}
+  Contact page: WhatsApp / call / address cards, and a message box that opens
+  WhatsApp with the message ready to send (plus Shopify's email form as backup).
+{%- endcomment -%}
+{%- liquid
+  assign wa = section.settings.whatsapp | remove: '+' | remove: ' ' | remove: '-'
+  assign hello = 'Hi DRIFT!' | url_encode
+-%}
+<div class="drift-info drift-wrap">
+  <header class="drift-info__head">
+    <p class="drift-label drift-accent">Help</p>
+    <h1 class="drift-collection__title">{{ section.settings.title }}</h1>
+    <div class="drift-info__intro">{{ section.settings.intro }}</div>
+  </header>
+  <div class="drift-info__body">
+    {%- render 'drift-info-nav' -%}
+    <div>
+      <div class="drift-cards">
+        <a class="drift-card-box drift-card-box--wa" href="https://wa.me/{{ wa }}?text={{ hello }}" target="_blank" rel="noopener">
+          <span class="drift-label">WhatsApp</span>
+          <span class="drift-card-box__big">{{ section.settings.whatsapp_display }}</span>
+          <span>Chat with us →</span>
+        </a>
+        <a class="drift-card-box" href="tel:{{ section.settings.phone | remove: ' ' }}">
+          <span class="drift-label">Call us</span>
+          <span class="drift-card-box__big">{{ section.settings.phone }}</span>
+          <span>{{ section.settings.hours }}</span>
+        </a>
+        <div class="drift-card-box drift-card-box--wide">
+          <span class="drift-label">Office address</span>
+          <address class="drift-card-box__big">{{ shop.name }}<br>{{ section.settings.address }}</address>
+          {%- if shop.email != blank -%}<a href="mailto:{{ shop.email }}">{{ shop.email }}</a>{%- endif -%}
+        </div>
+      </div>
+
+      <div class="drift-prose">
+        <h2>Send us a message</h2>
+        <p>Write your message and it opens WhatsApp ready to send. Prefer email? Use the form below it.</p>
+      </div>
+      <drift-wa-form class="drift-form" data-wa="{{ wa }}">
+        <input name="name" placeholder="Your name" aria-label="Your name" required>
+        <input name="order" placeholder="Order number (optional)" aria-label="Order number">
+        <textarea name="message" rows="4" placeholder="How can we help?" aria-label="Message" required></textarea>
+        <button type="button" class="drift-btn drift-btn--dark">Send on WhatsApp</button>
+      </drift-wa-form>
+
+      {%- form 'contact', class: 'drift-form drift-form--email' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="drift-label">Thanks. We'll get back to you by email ✦</p>
+        {%- else -%}
+          <p class="drift-label drift-form__label">Or email us</p>
+          <input name="contact[name]" placeholder="Your name" aria-label="Your name">
+          <input type="email" name="contact[email]" required placeholder="Your email" aria-label="Your email">
+          <textarea name="contact[body]" rows="4" required placeholder="Your message" aria-label="Message"></textarea>
+          <button type="submit" class="drift-btn drift-btn--outline">Send email</button>
+          {%- if form.errors -%}<p class="drift-error">{{ form.errors | default_errors }}</p>{%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+
+      <div class="drift-prose">
+        <h2>Before you write</h2>
+        <ul>
+          <li>Where's my order? Check <a href="/pages/track-order">Track your order</a> first.</li>
+          <li>Returns and refunds: see our <a href="/policies/refund-policy">returns &amp; refunds policy</a>.</li>
+          <li>Sizing help: see the <a href="/pages/size-guide">size guide</a>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT contact",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Contact us" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Call, WhatsApp or visit us. The fastest way to reach us is WhatsApp. We reply within a few hours during working hours.</p>" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number (digits, with 92)", "default": "923711322476" },
+    { "type": "text", "id": "whatsapp_display", "label": "WhatsApp as shown", "default": "+92 371 1322476" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "0371 1322476" },
+    { "type": "text", "id": "hours", "label": "Hours", "default": "Mon–Sat, 11am–8pm (Pakistan time)" },
+    { "type": "text", "id": "address", "label": "Address", "default": "Faisalabad, Pakistan" }
+  ]
+}
+{% endschema %}

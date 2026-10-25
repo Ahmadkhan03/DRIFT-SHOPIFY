@@ -1,0 +1,70 @@
+{%- comment -%} About / Our story: full-width photo header, story, four pillars, closing call-to-action. {%- endcomment -%}
+<div class="drift-about">
+  <div class="drift-about__hero">
+    {%- if section.settings.hero -%}
+      {{ section.settings.hero | image_url: width: 2400 | image_tag: widths: '900, 1400, 2000, 2400', sizes: '100vw', loading: 'eager', alt: section.settings.title }}
+    {%- endif -%}
+    <div class="drift-about__hero-text drift-wrap">
+      <p class="drift-label">Our story</p>
+      <h1>{{ section.settings.title }}</h1>
+    </div>
+  </div>
+
+  <div class="drift-about__story drift-wrap">
+    <div>
+      <p class="drift-label drift-accent">{{ section.settings.story_eyebrow }}</p>
+      <h2 class="drift-editorial__title">{{ section.settings.story_title }}</h2>
+    </div>
+    <div class="drift-about__copy">{{ section.settings.story }}</div>
+    {%- if section.settings.story_image -%}
+      <div class="drift-about__image">
+        {{ section.settings.story_image | image_url: width: 1400 | image_tag: widths: '600, 1000, 1400', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy', alt: '' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="drift-pillars">
+    {%- for block in section.blocks -%}
+      <div class="drift-pillars__item" {{ block.shopify_attributes }}>
+        <p class="drift-mono drift-accent">0{{ forloop.index }}</p>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="drift-about__cta drift-wrap">
+    <p class="drift-label">{{ section.settings.cta_eyebrow }}</p>
+    <p class="drift-about__cta-title">{{ section.settings.cta_title }}</p>
+    <p class="drift-about__cta-text">{{ section.settings.cta_text }}</p>
+    <div class="drift-hero__ctas">
+      <a class="drift-btn drift-btn--light" href="{{ routes.collections_url }}/men">Shop men</a>
+      <a class="drift-btn drift-btn--outline-light" href="{{ routes.collections_url }}/women">Shop women</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT about",
+  "class": "drift-section",
+  "settings": [
+    { "type": "image_picker", "id": "hero", "label": "Top photo" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Made in Pakistan. Worn everywhere." },
+    { "type": "text", "id": "story_eyebrow", "label": "Story small text", "default": "Why DRIFT" },
+    { "type": "text", "id": "story_title", "label": "Story title", "default": "Streetwear that lasts past the trend" },
+    { "type": "richtext", "id": "story", "label": "Story" },
+    { "type": "image_picker", "id": "story_image", "label": "Story photo" },
+    { "type": "text", "id": "cta_eyebrow", "label": "Closing small text", "default": "Collection 01" },
+    { "type": "text", "id": "cta_title", "label": "Closing title", "default": "This is only the first drop." },
+    { "type": "text", "id": "cta_text", "label": "Closing text", "default": "Hoodies, sweatshirts and trousers, cut for men and women alike." }
+  ],
+  "blocks": [
+    { "type": "pillar", "name": "Pillar", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Heavyweight, always" },
+      { "type": "text", "id": "text", "label": "Text" }
+    ] }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}
