@@ -1,0 +1,26 @@
+{% doc %}
+  Swatch colour for a colour name (DRIFT's colour library). Unknown names fall back to grey.
+  @param {string} name - Colour name, e.g. "Sea Green"
+{% enddoc %}
+{%- assign key = name | downcase | strip -%}
+{%- case key -%}
+  {%- when 'black' -%}#111111
+  {%- when 'jet black' -%}#0b0b0c
+  {%- when 'washed black' -%}#2e2d2c
+  {%- when 'onyx' -%}#1c1c1e
+  {%- when 'white' -%}#f7f5f0
+  {%- when 'bone' -%}#e8e0d0
+  {%- when 'stone' -%}#b8ad9e
+  {%- when 'grey', 'gray' -%}#8e8c89
+  {%- when 'rust' -%}#9a4a2c
+  {%- when 'olive' -%}#5b5e3a
+  {%- when 'mocha' -%}#6b4a3a
+  {%- when 'tan' -%}#b08a5e
+  {%- when 'maroon' -%}#6b1420
+  {%- when 'navy' -%}#1f2a44
+  {%- when 'brown' -%}#4a3428
+  {%- when 'cream' -%}#efe6d2
+  {%- when 'skin' -%}#d9c4a8
+  {%- when 'sea green' -%}#9fb5aa
+  {%- else -%}#8e8c89
+{%- endcase -%}

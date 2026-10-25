@@ -1,0 +1,123 @@
+{%- comment -%}
+  DRIFT collection page: big title, category tabs, size filter and sort, product grid.
+  Men / Women collections show that model's photos (alt text "| men" / "| women"),
+  and their tabs filter by category tag, e.g. /collections/men/hoodies.
+{%- endcomment -%}
+{%- liquid
+  assign fit = ''
+  if collection.handle == 'men' or collection.handle == 'women'
+    assign fit = collection.handle
+  endif
+
+  assign active_tag = current_tags.first | handle
+  assign heading = collection.title
+  if fit != blank and active_tag != blank
+    for c in section.settings.categories
+      if c.handle == active_tag
+        assign heading = collection.title | append: "'s " | append: c.title
+      endif
+    endfor
+  endif
+
+  assign sizes_seen = ''
+-%}
+<div class="drift-collection">
+  <div class="drift-collection__head drift-wrap">
+    <p class="drift-label drift-accent">{{ collection.products_count }} piece{% if collection.products_count != 1 %}s{% endif %}</p>
+    <h1 class="drift-collection__title">{{ heading }}</h1>
+    {%- if collection.description != blank and active_tag == blank -%}
+      <div class="drift-collection__desc">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="drift-collection__bar drift-wrap">
+    <nav class="drift-tabs" aria-label="Categories">
+      {%- if fit != blank -%}
+        <a class="drift-tab{% if active_tag == blank %} is-active{% endif %}" href="{{ collection.url }}">All</a>
+        {%- for c in section.settings.categories -%}
+          <a class="drift-tab{% if active_tag == c.handle %} is-active{% endif %}" href="{{ collection.url }}/{{ c.handle }}">{{ c.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a class="drift-tab{% if collection.handle == 'all' %} is-active{% endif %}" href="{{ routes.all_products_collection_url }}">All</a>
+        {%- for c in section.settings.categories -%}
+          <a class="drift-tab{% if collection.handle == c.handle %} is-active{% endif %}" href="{{ c.url }}">{{ c.title }}</a>
+        {%- endfor -%}
+      {%- endif -%}
+    </nav>
+    <div class="drift-collection__tools">
+      <drift-size-filter class="drift-sizes" data-sizes></drift-size-filter>
+      <label class="drift-sort">
+        <span class="visually-hidden">Sort</span>
+        <select onchange="const u=new URL(location.href);u.searchParams.set('sort_by',this.value);location.href=u">
+          {%- assign sort = collection.sort_by | default: collection.default_sort_by -%}
+          {%- for option in collection.sort_options -%}
+            {%- if option.value == 'manual' or option.value == 'price-ascending' or option.value == 'price-descending' or option.value == 'created-descending' or option.value == 'best-selling' -%}
+              <option value="{{ option.value }}"{% if option.value == sort %} selected{% endif %}>
+                {%- case option.value -%}
+                  {%- when 'manual' -%}Featured
+                  {%- when 'created-descending' -%}Newest
+                  {%- when 'price-ascending' -%}Price: low to high
+                  {%- when 'price-descending' -%}Price: high to low
+                  {%- else -%}{{ option.name }}
+                {%- endcase -%}
+              </option>
+            {%- endif -%}
+          {%- endfor -%}
+        </select>
+      </label>
+    </div>
+  </div>
+
+  {%- paginate collection.products by 24 -%}
+    <div class="drift-grid drift-wrap" data-grid>
+      {%- for product in collection.products -%}
+        {%- liquid
+          assign available_sizes = ''
+          for v in product.variants
+            if v.available
+              assign available_sizes = available_sizes | append: '|' | append: v.option2
+              unless sizes_seen contains v.option2
+                assign sizes_seen = sizes_seen | append: ',' | append: v.option2
+              endunless
+            endif
+          endfor
+        -%}
+        {%- assign eager = false -%}
+        {%- if forloop.index <= 4 -%}{%- assign eager = true -%}{%- endif -%}
+        <div class="drift-grid__item" data-sizes="{{ available_sizes }}|">
+          {%- render 'drift-product-card', product: product, fit: fit, eager: eager -%}
+        </div>
+      {%- else -%}
+        <div class="drift-empty">
+          <p class="drift-collection__title drift-empty__title">Nothing here yet</p>
+          <p>New pieces drop soon. Have a look at the full collection in the meantime.</p>
+          <a class="drift-btn drift-btn--outline" href="{{ routes.all_products_collection_url }}">Shop all</a>
+        </div>
+      {%- endfor -%}
+    </div>
+    <p class="drift-empty drift-wrap" data-no-size hidden>No pieces in this size right now.</p>
+    {%- if paginate.pages > 1 -%}
+      <nav class="drift-pages drift-wrap" aria-label="Pages">
+        {%- if paginate.previous -%}<a class="drift-btn drift-btn--outline" href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+        <span class="drift-label">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a class="drift-btn drift-btn--outline" href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+  <script type="application/json" data-size-list>{{ sizes_seen | remove_first: ',' | split: ',' | json }}</script>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT collection",
+  "class": "drift-section",
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "categories",
+      "label": "Category tabs",
+      "info": "Shown as tabs. On Men / Women pages they filter by the matching product tag (e.g. Hoodies)."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,202 @@
+{%- comment -%}
+  DRIFT product page: photos for the chosen colour (and the Men / Women model when
+  arriving from those pages), colour swatches, size buttons, sale price with -X%,
+  "Add to bag" into the cart drawer, size chart with inches / cm switch, details,
+  delivery & exchanges, and a slim sticky bar on phones.
+  Size charts are edited as "Size chart" blocks in the theme editor.
+{%- endcomment -%}
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign colour_opt = product.options_with_values | where: 'name', 'Color' | first
+  assign size_opt = product.options_with_values | where: 'name', 'Size' | first
+  assign off = 0
+  if current.compare_at_price > current.price
+    assign off = current.compare_at_price | minus: current.price | times: 100.0 | divided_by: current.compare_at_price | round
+  endif
+
+  assign chart = null
+  for block in section.blocks
+    if block.type == 'chart'
+      for p in block.settings.products
+        if p.id == product.id
+          assign chart = block
+        endif
+      endfor
+    endif
+  endfor
+
+  assign badge = ''
+  if product.tags contains 'Limited'
+    assign badge = 'Limited'
+  elsif product.tags contains 'New'
+    assign badge = 'New'
+  endif
+-%}
+<drift-product class="drift-product" data-product-url="{{ product.url }}">
+  <script type="application/json" data-variants>
+    [{%- for v in product.variants -%}{"id":{{ v.id }},"colour":{{ v.option1 | json }},"size":{{ v.option2 | json }},"available":{{ v.available | json }},"price":{{ v.price | money_without_trailing_zeros | json }},"compare":{% if v.compare_at_price > v.price %}{{ v.compare_at_price | money_without_trailing_zeros | json }}{% else %}null{% endif %},"off":{% if v.compare_at_price > v.price %}{{ v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round }}{% else %}0{% endif %},"stock":{{ v.inventory_quantity | default: 0 }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+  </script>
+
+  <div class="drift-product__gallery" data-gallery>
+    {%- for media in product.media -%}
+      {%- if media.media_type == 'image' -%}
+        {%- liquid
+          assign alt_parts = media.alt | split: ' | '
+          assign img_fit = alt_parts[1] | strip
+          assign name_colour = alt_parts[0] | split: ' - '
+          assign img_colour = name_colour | last | strip
+          assign img_alt = alt_parts[0] | strip | escape
+        -%}
+        <figure class="drift-product__photo" data-colour="{{ img_colour | escape }}" data-fit="{{ img_fit }}">
+          {{ media | image_url: width: 1800 | image_tag:
+              widths: '600, 900, 1200, 1500, 1800',
+              sizes: '(min-width: 990px) 30vw, 100vw',
+              loading: 'lazy',
+              alt: img_alt
+          }}
+        </figure>
+      {%- endif -%}
+    {%- endfor -%}
+    <div class="drift-product__dots" data-dots aria-hidden="true"></div>
+  </div>
+
+  <div class="drift-product__info">
+    <div class="drift-product__sticky">
+      <p class="drift-label drift-product__crumb">
+        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        {%- if product.type != blank -%} / <a href="{{ routes.collections_url }}/{{ product.type | handle }}">{{ product.type }}</a>{%- endif -%}
+      </p>
+      <div class="drift-product__titlerow">
+        <h1 class="drift-product__title">{{ product.title }}</h1>
+        {%- if badge != blank -%}<span class="drift-tag">{{ badge }}</span>{%- endif -%}
+      </div>
+
+      <div class="drift-product__price" data-price>
+        {%- if off > 0 -%}<s data-compare>{{ current.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}
+        <span data-now>{{ current.price | money_without_trailing_zeros }}</span>
+        <span class="drift-tag drift-tag--sale" data-off {% if off == 0 %}hidden{% endif %}>-{{ off }}%</span>
+      </div>
+
+      {%- form 'product', product, data-drift-add: '', class: 'drift-product__form' -%}
+        <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+
+        {%- if colour_opt -%}
+          <fieldset class="drift-option">
+            <legend class="drift-label">Colour · <span data-colour-name>{{ current.option1 }}</span></legend>
+            <div class="drift-swatches">
+              {%- for value in colour_opt.values -%}
+                <button type="button" class="drift-swatch{% if value == current.option1 %} is-active{% endif %}" data-colour="{{ value | escape }}" aria-label="{{ value | escape }}" title="{{ value | escape }}">
+                  <span style="background: {% render 'drift-colour', name: value %};"></span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endif -%}
+
+        {%- if size_opt -%}
+          <fieldset class="drift-option">
+            <legend class="drift-label drift-option__legend">
+              <span>Size</span>
+              {%- if chart -%}<button type="button" class="drift-link drift-label" data-open-chart>Size chart</button>{%- endif -%}
+            </legend>
+            <div class="drift-sizes-pick">
+              {%- for value in size_opt.values -%}
+                <button type="button" class="drift-size" data-size="{{ value | escape }}">{{ value }}</button>
+              {%- endfor -%}
+            </div>
+            <p class="drift-stock drift-label" data-stock></p>
+          </fieldset>
+        {%- endif -%}
+
+        <button type="submit" class="drift-btn drift-btn--dark drift-product__add" data-add disabled>
+          <span data-add-label>Select a size</span>
+        </button>
+        <p class="drift-error" data-error role="alert"></p>
+      {%- endform -%}
+
+      <ul class="drift-product__promises">
+        <li>{%- render 'drift-icon', name: 'cash' -%} Cash on delivery across Pakistan</li>
+        <li>{%- render 'drift-icon', name: 'truck' -%} Ships in 1–2 working days</li>
+        <li>{%- render 'drift-icon', name: 'refresh' -%} 7-day size exchanges</li>
+      </ul>
+
+      <div class="drift-accordion">
+        <details open>
+          <summary class="drift-label">Description</summary>
+          <div class="drift-rte">{{ product.description }}</div>
+        </details>
+        {%- if chart -%}
+          <details data-chart-details>
+            <summary class="drift-label">Size &amp; fit</summary>
+            <div class="drift-chart" data-chart>
+              <div class="drift-chart__top">
+                <p>{{ chart.settings.note }}</p>
+                <div class="drift-unit" role="group" aria-label="Units">
+                  <button type="button" class="is-active" data-unit-btn="in">in</button>
+                  <button type="button" data-unit-btn="cm">cm</button>
+                </div>
+              </div>
+              {%- assign chart_sizes = chart.settings.sizes | split: ',' -%}
+              {%- assign chart_rows = chart.settings.rows | newline_to_br | split: '<br />' -%}
+              <table>
+                <thead><tr><th></th>{%- for s in chart_sizes -%}<th>{{ s | strip }}</th>{%- endfor -%}</tr></thead>
+                <tbody>
+                  {%- for row in chart_rows -%}
+                    {%- assign parts = row | strip | split: ':' -%}
+                    {%- if parts.size == 2 -%}
+                      {%- assign values = parts[1] | split: ',' -%}
+                      <tr>
+                        <th>{{ parts[0] | strip }}</th>
+                        {%- for val in values -%}<td data-in="{{ val | strip }}">{{ val | strip }}</td>{%- endfor -%}
+                      </tr>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </tbody>
+              </table>
+              <p class="drift-chart__foot">Garment measured flat. Between sizes? Size down for a closer fit, up for more room.</p>
+            </div>
+          </details>
+        {%- endif -%}
+        <details>
+          <summary class="drift-label">Delivery &amp; exchanges</summary>
+          <div class="drift-rte">{{ section.settings.delivery }}</div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div class="drift-buybar" data-buybar>
+    <div>
+      <p class="drift-buybar__title">{{ product.title }}</p>
+      <p class="drift-buybar__price" data-bar-price>{{ current.price | money_without_trailing_zeros }}</p>
+    </div>
+    <button type="button" class="drift-btn drift-btn--dark" data-bar-add>Add to bag</button>
+  </div>
+</drift-product>
+
+{% schema %}
+{
+  "name": "DRIFT product",
+  "class": "drift-section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "delivery",
+      "label": "Delivery & exchanges text",
+      "default": "<p>Cash on Delivery or online payment. Delivered in 2–4 working days to major cities, 4–7 elsewhere. Size exchanges within 7 days of delivery.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chart",
+      "name": "Size chart",
+      "settings": [
+        { "type": "product_list", "id": "products", "label": "Products using this chart" },
+        { "type": "text", "id": "note", "label": "Fit note", "default": "This piece is intended to fit oversized." },
+        { "type": "text", "id": "sizes", "label": "Sizes", "default": "S, M, L", "info": "Comma-separated, in order." },
+        { "type": "textarea", "id": "rows", "label": "Measurements (inches)", "default": "Chest width: 24, 25, 26\nShoulder: 26, 27, 28\nBody length: 25, 26, 27", "info": "One line per measurement: Name: value, value, value" }
+      ]
+    }
+  ]
+}
+{% endschema %}

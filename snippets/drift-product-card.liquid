@@ -48,6 +48,9 @@
     assign loading = 'eager'
   endif
   assign card_url = product.url
+  if fit_tag != blank
+    assign card_url = product.url | append: '?fit=' | append: fit
+  endif
 -%}
 <a href="{{ card_url }}" class="drift-card">
   <div class="drift-card__media">
