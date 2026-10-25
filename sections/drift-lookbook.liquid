@@ -15,12 +15,7 @@
       <figure class="drift-look" {{ block.shopify_attributes }}>
         <div class="drift-look__media">
           {%- if block.settings.image -%}
-            {{ block.settings.image | image_url: width: 1400 | image_tag:
-                widths: '500, 800, 1100, 1400',
-                sizes: '(min-width: 750px) 40vw, 80vw',
-                loading: 'lazy',
-                alt: block.settings.caption
-            }}
+            {%- render 'drift-img', image: block.settings.image, widths: '500, 800, 1100, 1400', sizes: '(min-width: 750px) 40vw, 80vw', alt: block.settings.caption, loading: 'lazy' -%}
           {%- endif -%}
           {%- for n in (1..3) -%}
             {%- assign pkey = 'product_' | append: n -%}
@@ -45,7 +40,7 @@
               <div class="drift-spot" style="left: {{ block.settings[xkey] }}%; top: {{ block.settings[ykey] }}%;">
                 <button type="button" class="drift-spot__dot" aria-label="Show {{ spot_product.title | escape }}" aria-expanded="false"></button>
                 <a class="drift-spot__card" href="{{ spot_url }}">
-                  {%- if spot_image -%}{{ spot_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+                  {%- if spot_image -%}{%- render 'drift-img', image: spot_image, alt: '', loading: 'lazy', widths: '120, 180', sizes: '56px' -%}{%- endif -%}
                   <span>
                     <b>{{ spot_product.title }}</b>
                     {%- if block.settings[ckey] != blank -%}<i>{{ block.settings[ckey] }}</i>{%- endif -%}

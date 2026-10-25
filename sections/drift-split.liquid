@@ -3,13 +3,7 @@
   {%- for block in section.blocks -%}
     <a class="drift-split__tile" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
       {%- if block.settings.image -%}
-        {{ block.settings.image | image_url: width: 1600 | image_tag:
-            widths: '600, 900, 1200, 1600',
-            sizes: '(min-width: 750px) 50vw, 100vw',
-            loading: 'lazy',
-            alt: block.settings.title,
-            class: 'drift-zoom'
-        }}
+        {%- render 'drift-img', image: block.settings.image, widths: '600, 900, 1200, 1600', sizes: '(min-width: 750px) 50vw, 100vw', alt: block.settings.title, class: 'drift-zoom', loading: 'lazy' -%}
       {%- endif -%}
       <div class="drift-split__shade"></div>
       <div class="drift-split__tint"></div>

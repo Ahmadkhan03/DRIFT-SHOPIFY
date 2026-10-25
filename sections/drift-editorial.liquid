@@ -3,12 +3,12 @@
   <div class="drift-editorial__media">
     <div class="drift-editorial__main">
       {%- if section.settings.main -%}
-        {{ section.settings.main | image_url: width: 1400 | image_tag: widths: '600, 900, 1400', sizes: '(min-width: 750px) 50vw, 84vw', loading: 'lazy', alt: section.settings.title, data-parallax: '0.08' }}
+        {%- render 'drift-img', image: section.settings.main, widths: '600, 900, 1400', sizes: '(min-width: 750px) 50vw, 84vw', alt: section.settings.title, loading: 'lazy', parallax: '0.08' -%}
       {%- endif -%}
     </div>
     <div class="drift-editorial__inset">
       {%- if section.settings.inset -%}
-        {{ section.settings.inset | image_url: width: 800 | image_tag: widths: '400, 600, 800', sizes: '(min-width: 750px) 20vw, 46vw', loading: 'lazy', alt: '' }}
+        {%- render 'drift-img', image: section.settings.inset, widths: '400, 600, 800', sizes: '(min-width: 750px) 20vw, 46vw', alt: '', loading: 'lazy' -%}
       {%- endif -%}
     </div>
   </div>

@@ -1,0 +1,40 @@
+{% doc %}
+  Responsive image at quality 90 (Shopify's default compression visibly softens
+  fabric and skin detail; the old site served quality 90 too).
+
+  @param {object} image - Image or media object
+  @param {string} widths - Comma-separated widths, e.g. '600, 900, 1200'
+  @param {string} sizes - The sizes attribute
+  @param {string} [alt] - Alt text
+  @param {string} [class] - CSS class
+  @param {string} [loading] - 'lazy' (default) or 'eager'
+  @param {string} [parallax] - Optional data-parallax value
+{% enddoc %}
+{%- liquid
+  assign list = widths | split: ','
+  assign largest = list | last | strip | plus: 0
+  assign srcset = ''
+  for w in list
+    assign wn = w | strip | plus: 0
+    assign u = image | image_url: width: wn | append: '&quality=90'
+    assign srcset = srcset | append: u | append: ' ' | append: wn | append: 'w'
+    unless forloop.last
+      assign srcset = srcset | append: ', '
+    endunless
+  endfor
+  assign src = image | image_url: width: largest | append: '&quality=90'
+  assign ratio_h = image.height | times: 1.0 | divided_by: image.width | times: largest | round
+-%}
+<img
+  src="{{ src }}"
+  srcset="{{ srcset }}"
+  sizes="{{ sizes }}"
+  width="{{ largest }}"
+  height="{{ ratio_h }}"
+  alt="{{ alt | escape }}"
+  loading="{{ loading | default: 'lazy' }}"
+  {%- if loading == 'eager' %} fetchpriority="high"{% endif %}
+  {%- if class != blank %} class="{{ class }}"{% endif %}
+  {%- if parallax != blank %} data-parallax="{{ parallax }}"{% endif %}
+  decoding="async"
+>

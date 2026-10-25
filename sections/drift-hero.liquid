@@ -18,24 +18,11 @@
         {%- assign loading = 'lazy' -%}
         {%- if forloop.first -%}{%- assign loading = 'eager' -%}{%- endif -%}
         {%- if block.settings.image -%}
-          {{ block.settings.image | image_url: width: 2400 | image_tag:
-              widths: '1000, 1400, 1800, 2400',
-              sizes: '100vw',
-              loading: loading,
-              fetchpriority: 'auto',
-              alt: block.settings.title,
-              class: 'drift-hero__img drift-hero__img--desktop'
-          }}
+          {%- render 'drift-img', image: block.settings.image, widths: '1200, 1600, 2000, 2600, 3200', sizes: '100vw', alt: block.settings.title, class: 'drift-hero__img drift-hero__img--desktop', loading: loading -%}
         {%- endif -%}
         {%- assign phone = block.settings.mobile_image | default: block.settings.image -%}
         {%- if phone -%}
-          {{ phone | image_url: width: 1200 | image_tag:
-              widths: '600, 900, 1200',
-              sizes: '100vw',
-              loading: loading,
-              alt: block.settings.title,
-              class: 'drift-hero__img drift-hero__img--phone'
-          }}
+          {%- render 'drift-img', image: phone, widths: '750, 1100, 1500', sizes: '100vw', alt: block.settings.title, class: 'drift-hero__img drift-hero__img--phone', loading: loading -%}
         {%- endif -%}
       </div>
       <div class="drift-hero__shade"></div>

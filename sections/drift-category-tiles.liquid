@@ -11,13 +11,7 @@
       {%- assign name = block.settings.title | default: c.title -%}
       <a class="drift-tile" href="{{ c.url | default: '#' }}" {{ block.shopify_attributes }}>
         {%- if img -%}
-          {{ img | image_url: width: 1400 | image_tag:
-              widths: '500, 800, 1100, 1400',
-              sizes: '(min-width: 750px) 33vw, 100vw',
-              loading: 'lazy',
-              alt: name,
-              class: 'drift-zoom'
-          }}
+          {%- render 'drift-img', image: img, widths: '500, 800, 1100, 1400', sizes: '(min-width: 750px) 33vw, 100vw', alt: name, class: 'drift-zoom', loading: 'lazy' -%}
         {%- endif -%}
         <div class="drift-split__shade"></div>
         <div class="drift-split__tint"></div>

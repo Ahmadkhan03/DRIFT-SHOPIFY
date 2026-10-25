@@ -2,7 +2,7 @@
 <div class="drift-about">
   <div class="drift-about__hero">
     {%- if section.settings.hero -%}
-      {{ section.settings.hero | image_url: width: 2400 | image_tag: widths: '900, 1400, 2000, 2400', sizes: '100vw', loading: 'eager', alt: section.settings.title }}
+      {%- render 'drift-img', image: section.settings.hero, widths: '900, 1400, 2000, 2400', sizes: '100vw', alt: section.settings.title, loading: 'eager' -%}
     {%- endif -%}
     <div class="drift-about__hero-text drift-wrap">
       <p class="drift-label">Our story</p>
@@ -18,7 +18,7 @@
     <div class="drift-about__copy">{{ section.settings.story }}</div>
     {%- if section.settings.story_image -%}
       <div class="drift-about__image">
-        {{ section.settings.story_image | image_url: width: 1400 | image_tag: widths: '600, 1000, 1400', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy', alt: '' }}
+        {%- render 'drift-img', image: section.settings.story_image, widths: '600, 1000, 1400', sizes: '(min-width: 750px) 50vw, 100vw', alt: '', loading: 'lazy' -%}
       </div>
     {%- endif -%}
   </div>

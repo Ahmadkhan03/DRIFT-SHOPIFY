@@ -48,12 +48,7 @@
           assign img_alt = alt_parts[0] | strip | escape
         -%}
         <figure class="drift-product__photo" data-colour="{{ img_colour | escape }}" data-fit="{{ img_fit }}">
-          {{ media | image_url: width: 1800 | image_tag:
-              widths: '600, 900, 1200, 1500, 1800',
-              sizes: '(min-width: 990px) 30vw, 100vw',
-              loading: 'lazy',
-              alt: img_alt
-          }}
+          {%- render 'drift-img', image: media, widths: '700, 1000, 1400, 1800, 2400', sizes: '(min-width: 990px) 60vw, 100vw', alt: img_alt, loading: 'lazy' -%}
         </figure>
       {%- endif -%}
     {%- endfor -%}

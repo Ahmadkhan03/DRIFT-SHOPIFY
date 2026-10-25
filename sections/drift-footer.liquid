@@ -63,7 +63,7 @@
 
   <div class="drift-footer__logo">
     {%- if settings.logo_inverse -%}
-      {{ settings.logo_inverse | image_url: width: 1600 | image_tag: alt: shop.name, loading: 'lazy', widths: '600, 1000, 1600', sizes: '90vw' }}
+      {%- render 'drift-img', image: settings.logo_inverse, widths: '600, 1000, 1600', sizes: '90vw', alt: shop.name, loading: 'lazy' -%}
     {%- else -%}
       <p class="drift-footer__wordmark">{{ shop.name }}</p>
     {%- endif -%}
