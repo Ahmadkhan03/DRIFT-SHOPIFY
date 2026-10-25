@@ -1,0 +1,38 @@
+{%- comment -%} Heading + a swipeable row of DRIFT product cards from a collection. {%- endcomment -%}
+{%- assign collection = section.settings.collection -%}
+<div class="drift-rail">
+  <div class="drift-rail__head drift-wrap">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<p class="drift-label drift-accent">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="drift-rail__title">{{ section.settings.title }}</h2>
+    </div>
+    {%- if collection -%}
+      <a class="drift-link drift-label" href="{{ collection.url }}">View all →</a>
+    {%- endif -%}
+  </div>
+  <div class="drift-rail__track">
+    {%- if collection and collection.products.size > 0 -%}
+      {%- for product in collection.products limit: section.settings.limit -%}
+        <div class="drift-rail__item">
+          {%- render 'drift-product-card', product: product, eager: forloop.first -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <p class="drift-wrap">Choose a collection in the theme editor.</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT product rail",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small text above", "default": "Just landed" },
+    { "type": "text", "id": "title", "label": "Title", "default": "New arrivals" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 16, "step": 1, "default": 8 }
+  ],
+  "presets": [{ "name": "DRIFT product rail" }]
+}
+{% endschema %}

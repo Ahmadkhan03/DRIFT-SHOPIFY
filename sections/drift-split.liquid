@@ -1,0 +1,46 @@
+{%- comment -%} Two big image tiles side by side (Men / Women). {%- endcomment -%}
+<div class="drift-split">
+  {%- for block in section.blocks -%}
+    <a class="drift-split__tile" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.image -%}
+        {{ block.settings.image | image_url: width: 1600 | image_tag:
+            widths: '600, 900, 1200, 1600',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            loading: 'lazy',
+            alt: block.settings.title,
+            class: 'drift-zoom'
+        }}
+      {%- endif -%}
+      <div class="drift-split__shade"></div>
+      <div class="drift-split__tint"></div>
+      <div class="drift-split__content">
+        <div>
+          {%- if block.settings.note != blank -%}<p class="drift-label drift-split__note">{{ block.settings.note }}</p>{%- endif -%}
+          <h2 class="drift-split__title">{{ block.settings.title }}</h2>
+        </div>
+        <span class="drift-split__cta drift-label">Shop</span>
+      </div>
+    </a>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT men / women",
+  "class": "drift-section",
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Men" },
+        { "type": "text", "id": "note", "label": "Small text", "default": "Hoodies, sweatshirts & trousers" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{ "name": "DRIFT men / women", "blocks": [{ "type": "tile" }, { "type": "tile" }] }]
+}
+{% endschema %}

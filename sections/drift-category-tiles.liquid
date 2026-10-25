@@ -1,0 +1,60 @@
+{%- comment -%} "The collection": tall category tiles with number, name and short line. {%- endcomment -%}
+<div class="drift-tiles">
+  <div class="drift-tiles__head drift-wrap">
+    {%- if section.settings.eyebrow != blank -%}<p class="drift-label drift-accent">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="drift-rail__title">{{ section.settings.title }}</h2>
+  </div>
+  <div class="drift-tiles__grid" style="--drift-cols: {{ section.blocks.size }};">
+    {%- for block in section.blocks -%}
+      {%- assign c = block.settings.collection -%}
+      {%- assign img = block.settings.image | default: c.featured_image -%}
+      {%- assign name = block.settings.title | default: c.title -%}
+      <a class="drift-tile" href="{{ c.url | default: '#' }}" {{ block.shopify_attributes }}>
+        {%- if img -%}
+          {{ img | image_url: width: 1400 | image_tag:
+              widths: '500, 800, 1100, 1400',
+              sizes: '(min-width: 750px) 33vw, 100vw',
+              loading: 'lazy',
+              alt: name,
+              class: 'drift-zoom'
+          }}
+        {%- endif -%}
+        <div class="drift-split__shade"></div>
+        <div class="drift-split__tint"></div>
+        <div class="drift-tile__content">
+          <div>
+            <p class="drift-label drift-tile__num">0{{ forloop.index }}</p>
+            <h3 class="drift-tile__title">{{ name }}</h3>
+            {%- if block.settings.blurb != blank -%}<p class="drift-tile__blurb">{{ block.settings.blurb }}</p>{%- endif -%}
+          </div>
+          <span class="drift-label drift-tile__cta">Shop →</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT category tiles",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small text above", "default": "Shop by category" },
+    { "type": "text", "id": "title", "label": "Title", "default": "The collection" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Photo (optional)", "info": "Uses the collection photo if empty." },
+        { "type": "text", "id": "title", "label": "Name (optional)" },
+        { "type": "text", "id": "blurb", "label": "Short line" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "DRIFT category tiles", "blocks": [{ "type": "tile" }, { "type": "tile" }, { "type": "tile" }] }]
+}
+{% endschema %}

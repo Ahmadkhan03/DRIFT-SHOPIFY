@@ -1,0 +1,35 @@
+{%- comment -%} Four promises in a bordered row (delivery, COD, exchanges, WhatsApp). {%- endcomment -%}
+<div class="drift-values">
+  {%- for block in section.blocks -%}
+    <div class="drift-values__item" {{ block.shopify_attributes }}>
+      <span class="drift-values__icon">{%- render 'drift-icon', name: block.settings.icon -%}</span>
+      <p class="drift-label">{{ block.settings.title }}</p>
+      <p class="drift-values__text">{{ block.settings.text }}</p>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT promises",
+  "class": "drift-section",
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Promise",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "truck", "options": [
+          { "value": "truck", "label": "Delivery" },
+          { "value": "cash", "label": "Cash" },
+          { "value": "refresh", "label": "Exchange" },
+          { "value": "chat", "label": "Chat" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "Nationwide delivery" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Delivered anywhere in Pakistan." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "DRIFT promises", "blocks": [{ "type": "value" }, { "type": "value" }, { "type": "value" }, { "type": "value" }] }]
+}
+{% endschema %}

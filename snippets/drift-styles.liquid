@@ -1,0 +1,111 @@
+{% doc %}
+  DRIFT brand layer on top of Horizon: self-hosted fonts (Archivo condensed for
+  display, Inter Tight for text, JetBrains Mono for numbers) and the editorial
+  look of driftpk.com — condensed uppercase headings, small tracked labels,
+  square buttons, bone / ink / maroon colours. Loaded after Horizon's variables.
+{% enddoc %}
+{{ 'drift.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'drift.js' | asset_url }}" defer></script>
+<style>
+  @font-face {
+    font-family: 'DRIFT Display';
+    src: url('{{ 'drift-archivo.woff2' | asset_url }}') format('woff2');
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'DRIFT Sans';
+    src: url('{{ 'drift-inter-tight.woff2' | asset_url }}') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'DRIFT Mono';
+    src: url('{{ 'drift-jetbrains-mono.woff2' | asset_url }}') format('woff2');
+    font-weight: 400 500;
+    font-display: swap;
+  }
+
+  :root {
+    --drift-bone: #f4f1ec;
+    --drift-ink: #111010;
+    --drift-ink-soft: #2a2727;
+    --drift-maroon: #5c0a14;
+    --drift-maroon-bright: #8e1b2a;
+    --drift-muted: #7a7470;
+    --drift-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --font-body--family: 'DRIFT Sans', system-ui, sans-serif;
+    --font-subheading--family: 'DRIFT Sans', system-ui, sans-serif;
+    --font-heading--family: 'DRIFT Display', system-ui, sans-serif;
+    --font-accent--family: 'DRIFT Display', system-ui, sans-serif;
+    --font-heading--weight: 900;
+    --font-accent--weight: 900;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  /* Display type: Archivo squeezed to 62% width, black weight, uppercase, tight */
+  h1, h2, h3, .h1, .h2, .h3, .drift-display {
+    font-family: 'DRIFT Display', system-ui, sans-serif;
+    font-stretch: 62%;
+    font-variation-settings: 'wdth' 62;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 0.85;
+    text-transform: uppercase;
+  }
+  h4, .h4 {
+    font-family: 'DRIFT Display', system-ui, sans-serif;
+    font-stretch: 62%;
+    font-variation-settings: 'wdth' 62;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  /* Small tracked labels (eyebrows, badges, nav, buttons) */
+  .drift-label,
+  .button, button.button, .shopify-payment-button__button--unbranded,
+  .badge, .product-badges__badge {
+    font-family: 'DRIFT Sans', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .button, button.button {
+    min-height: 48px;
+    transition: background-color 0.4s var(--drift-ease), color 0.4s var(--drift-ease), border-color 0.4s var(--drift-ease);
+  }
+
+  /* Prices and counters in the mono face, like the live site */
+  .price, .price-item, .drift-mono {
+    font-variant-numeric: tabular-nums;
+  }
+  .drift-mono { font-family: 'DRIFT Mono', ui-monospace, monospace; }
+
+  /* Sale badge in maroon */
+  .badge--sale, .product-badges__badge--sale {
+    background: var(--drift-maroon);
+    color: var(--drift-bone);
+  }
+
+  /* Phones: 16px inputs so iOS doesn't zoom in */
+  @media (max-width: 749px) {
+    input:not([type='checkbox']):not([type='radio']), select, textarea { font-size: 16px; }
+  }
+
+  /* Maroon announcement bar with bone text, tracked uppercase */
+  .announcement-bar, .announcement-bar a { color: var(--drift-bone); }
+  .announcement-bar__text { letter-spacing: 0.16em; font-weight: 500; }
+
+  /* Header links: small tracked caps like the live site */
+  .header .menu-list__link, .header-menu .menu-list__link { letter-spacing: 0.14em; font-weight: 500; }
+
+  ::selection { background: var(--drift-maroon); color: var(--drift-bone); }
+</style>

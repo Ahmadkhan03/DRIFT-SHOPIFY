@@ -1,0 +1,51 @@
+{%- comment -%}
+  Next drop: maroon panel with a live countdown and an early-access sign-up
+  (adds the email to Shopify customers with the tag "drop-waitlist").
+{%- endcomment -%}
+{%- if section.settings.enabled -%}
+<div class="drift-drop">
+  <div class="drift-drop__media">
+    {%- if section.settings.image -%}
+      {{ section.settings.image | image_url: width: 1400 | image_tag: widths: '600, 900, 1400', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'lazy', alt: section.settings.title }}
+    {%- endif -%}
+  </div>
+  <div class="drift-drop__body">
+    <div>
+      {%- if section.settings.label != blank -%}<p class="drift-label drift-drop__label">{{ section.settings.label }}</p>{%- endif -%}
+      <h2 class="drift-drop__title">{{ section.settings.title }}</h2>
+    </div>
+    <drift-countdown class="drift-countdown" data-date="{{ section.settings.date }}">
+      {%- assign units = 'Days,Hours,Mins,Secs' | split: ',' -%}
+      {%- for unit in units -%}
+        <div><p class="drift-mono" data-unit="{{ forloop.index0 }}">00</p><p class="drift-label">{{ unit }}</p></div>
+      {%- endfor -%}
+    </drift-countdown>
+    {%- if section.settings.text != blank -%}<p class="drift-drop__text">{{ section.settings.text }}</p>{%- endif -%}
+    {%- form 'customer', class: 'drift-drop__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter, drop-waitlist">
+      {%- if form.posted_successfully? -%}
+        <p class="drift-label">You're on the early access list ✦</p>
+      {%- else -%}
+        <input type="email" name="contact[email]" required placeholder="Your email for early access" aria-label="Email" autocomplete="email">
+        <button type="submit" class="drift-btn drift-btn--light">Notify me</button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DRIFT drop countdown",
+  "class": "drift-section",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show this section", "default": true },
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "label", "label": "Small text above", "default": "Drop 02 · Limited run" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Season of Drift" },
+    { "type": "text", "id": "date", "label": "Drop date and time", "info": "Format: 2026-11-14 20:00 (Pakistan time)", "default": "2026-11-14 20:00" },
+    { "type": "textarea", "id": "text", "label": "Text" }
+  ],
+  "presets": [{ "name": "DRIFT drop countdown" }]
+}
+{% endschema %}

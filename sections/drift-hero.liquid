@@ -1,0 +1,103 @@
+{%- comment -%}
+  DRIFT hero: full-screen slides (photo, optional phone photo, eyebrow, big title,
+  two buttons) that cross-fade with a slow zoom, plus progress bars.
+{%- endcomment -%}
+<drift-hero
+  class="drift-hero"
+  data-interval="{{ section.settings.interval }}"
+  style="--drift-hero-interval: {{ section.settings.interval }}s;"
+>
+  {%- for block in section.blocks -%}
+    <div
+      class="drift-hero__slide{% if forloop.first %} is-active{% endif %}"
+      data-slide
+      {{ block.shopify_attributes }}
+      {% unless forloop.first %}aria-hidden="true"{% endunless %}
+    >
+      <div class="drift-hero__media">
+        {%- assign loading = 'lazy' -%}
+        {%- if forloop.first -%}{%- assign loading = 'eager' -%}{%- endif -%}
+        {%- if block.settings.image -%}
+          {{ block.settings.image | image_url: width: 2400 | image_tag:
+              widths: '1000, 1400, 1800, 2400',
+              sizes: '100vw',
+              loading: loading,
+              fetchpriority: 'auto',
+              alt: block.settings.title,
+              class: 'drift-hero__img drift-hero__img--desktop'
+          }}
+        {%- endif -%}
+        {%- assign phone = block.settings.mobile_image | default: block.settings.image -%}
+        {%- if phone -%}
+          {{ phone | image_url: width: 1200 | image_tag:
+              widths: '600, 900, 1200',
+              sizes: '100vw',
+              loading: loading,
+              alt: block.settings.title,
+              class: 'drift-hero__img drift-hero__img--phone'
+          }}
+        {%- endif -%}
+      </div>
+      <div class="drift-hero__shade"></div>
+      <div class="drift-hero__content">
+        {%- if block.settings.eyebrow != blank -%}
+          <p class="drift-label drift-hero__eyebrow">{{ block.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if block.settings.title != blank -%}
+          {%- if forloop.first -%}
+            <h1 class="drift-hero__title">{{ block.settings.title }}</h1>
+          {%- else -%}
+            <h2 class="drift-hero__title">{{ block.settings.title }}</h2>
+          {%- endif -%}
+        {%- endif -%}
+        <div class="drift-hero__ctas">
+          {%- if block.settings.cta1_label != blank -%}
+            <a class="drift-btn drift-btn--light" href="{{ block.settings.cta1_link }}">{{ block.settings.cta1_label }}</a>
+          {%- endif -%}
+          {%- if block.settings.cta2_label != blank -%}
+            <a class="drift-btn drift-btn--outline-light" href="{{ block.settings.cta2_link }}">{{ block.settings.cta2_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="drift-hero__dots">
+      {%- for block in section.blocks -%}
+        <button type="button" class="drift-hero__dot{% if forloop.first %} is-active{% endif %}" data-dot="{{ forloop.index0 }}" aria-label="Show slide {{ forloop.index }}">
+          <span></span>
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  <div class="drift-hero__scroll" aria-hidden="true"><span class="drift-label">Scroll</span><i></i></div>
+</drift-hero>
+
+{% schema %}
+{
+  "name": "DRIFT hero slides",
+  "class": "drift-section drift-section--hero",
+  "settings": [
+    { "type": "range", "id": "interval", "label": "Seconds per slide", "min": 3, "max": 12, "step": 1, "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo (desktop)" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Photo (phone, optional)", "info": "Portrait photo for phones. Uses the desktop photo if empty." },
+        { "type": "text", "id": "eyebrow", "label": "Small text above", "default": "Collection 01" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Built for the drift" },
+        { "type": "text", "id": "cta1_label", "label": "Button 1 text", "default": "Shop collection" },
+        { "type": "url", "id": "cta1_link", "label": "Button 1 link" },
+        { "type": "text", "id": "cta2_label", "label": "Button 2 text" },
+        { "type": "url", "id": "cta2_link", "label": "Button 2 link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "DRIFT hero slides", "blocks": [{ "type": "slide" }] }]
+}
+{% endschema %}

@@ -1,0 +1,90 @@
+{% doc %}
+  DRIFT product card: photo (second photo on hover), New / Limited badge,
+  "-X%" sale tag, name, colour count and price with the original crossed out.
+
+  @param {object} product - The product
+  @param {string} [fit] - 'men' or 'women': show that model's photos (alt text ends "| men" / "| women")
+  @param {boolean} [eager] - Load the photo immediately (first cards on the page)
+{% enddoc %}
+{%- liquid
+  assign fit_tag = ''
+  if fit == 'men' or fit == 'women'
+    assign fit_tag = '| ' | append: fit
+  endif
+
+  assign photos = product.media | where: 'media_type', 'image'
+  assign first_photo = null
+  assign second_photo = null
+  for m in photos
+    if fit_tag == blank or m.alt contains fit_tag
+      if first_photo == null
+        assign first_photo = m
+      elsif second_photo == null
+        assign second_photo = m
+        break
+      endif
+    endif
+  endfor
+  if first_photo == null
+    assign first_photo = photos.first
+    assign second_photo = photos[1]
+  endif
+
+  assign badge = ''
+  if product.tags contains 'Limited'
+    assign badge = 'Limited'
+  elsif product.tags contains 'New'
+    assign badge = 'New'
+  endif
+
+  assign off = 0
+  if product.compare_at_price > product.price
+    assign off = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  assign colour_option = product.options_with_values | where: 'name', 'Color' | first
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+  assign card_url = product.url
+-%}
+<a href="{{ card_url }}" class="drift-card">
+  <div class="drift-card__media">
+    {%- if first_photo -%}
+      {{ first_photo | image_url: width: 1200 | image_tag:
+          widths: '360, 540, 720, 900, 1200',
+          sizes: '(min-width: 990px) 25vw, 50vw',
+          loading: loading,
+          alt: product.title,
+          class: 'drift-card__img'
+      }}
+    {%- endif -%}
+    {%- if second_photo -%}
+      {{ second_photo | image_url: width: 1200 | image_tag:
+          widths: '360, 540, 720, 900, 1200',
+          sizes: '(min-width: 990px) 25vw, 50vw',
+          loading: 'lazy',
+          alt: '',
+          class: 'drift-card__img drift-card__img--alt'
+      }}
+    {%- endif -%}
+    <div class="drift-card__tags">
+      {%- if badge != blank -%}<span class="drift-tag">{{ badge }}</span>{%- endif -%}
+      {%- if off > 0 -%}<span class="drift-tag drift-tag--sale">-{{ off }}%</span>{%- endif -%}
+    </div>
+    {%- unless product.available -%}<span class="drift-card__soldout drift-label">Sold out</span>{%- endunless -%}
+  </div>
+  <div class="drift-card__info">
+    <div>
+      <p class="drift-card__title">{{ product.title }}</p>
+      {%- if colour_option and colour_option.values.size > 1 -%}
+        <p class="drift-card__meta">{{ colour_option.values.size }} colours</p>
+      {%- endif -%}
+    </div>
+    <p class="drift-card__price">
+      {%- if off > 0 -%}<s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}
+      <span>{{ product.price | money_without_trailing_zeros }}</span>
+    </p>
+  </div>
+</a>
