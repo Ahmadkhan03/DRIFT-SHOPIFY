@@ -1,0 +1,153 @@
+<!doctype html><html><head><meta charset="utf-8"><title>DRIFT catalogue preview</title>
+<style>
+*{box-sizing:border-box;margin:0} body{font-family:'Segoe UI',Helvetica,Arial,sans-serif;background:#e9ebee;color:#1c2b33;width:1600px}
+.label{background:#1c2b33;color:#fff;font-size:13px;padding:8px 24px;letter-spacing:.2px}
+.label b{color:#ffd76b}
+.cols{display:flex;gap:28px;padding:24px}
+/* ---------- Commerce Manager ---------- */
+.cm{flex:1;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.12);overflow:hidden;display:flex}
+.nav{width:230px;background:#f5f6f6;border-right:1px solid #dddfe2;padding:16px 0}
+.cat{display:flex;align-items:center;gap:10px;padding:4px 16px 16px}
+.cat .ic{width:36px;height:36px;border-radius:6px;background:#1c2b33;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cat .n{font-weight:600;font-size:15px} .cat .s{font-size:12px;color:#65676b}
+.nav a{display:block;padding:9px 20px;font-size:14px;color:#1c2b33;text-decoration:none}
+.nav a.on{background:#e7f0fd;color:#0a66d9;font-weight:600;border-left:3px solid #0a66d9;padding-left:17px}
+.nav .sec{font-size:11px;color:#65676b;text-transform:uppercase;padding:14px 20px 6px;letter-spacing:.5px}
+.pane{flex:1;padding:20px 24px}
+.ph1{display:flex;justify-content:space-between;align-items:center}
+.ph1 h2{font-size:22px} .btn{background:#0a66d9;color:#fff;font-weight:600;font-size:14px;padding:8px 14px;border-radius:6px}
+.btn2{background:#e4e6eb;color:#1c2b33;font-weight:600;font-size:14px;padding:8px 14px;border-radius:6px;margin-right:8px}
+.banner{margin:14px 0;background:#e9f6ec;border:1px solid #b6e0c1;border-radius:6px;padding:10px 14px;font-size:13px;color:#1e6b34}
+.tiles{display:flex;gap:12px;margin-bottom:14px}
+.tile{flex:1;border:1px solid #dddfe2;border-radius:8px;padding:12px 14px} .tile b{font-size:24px;display:block} .tile span{font-size:12px;color:#65676b}
+.tools{display:flex;gap:8px;margin-bottom:10px} .search{flex:1;border:1px solid #ccd0d5;border-radius:6px;padding:8px 12px;font-size:13px;color:#8a8d91}
+.filter{border:1px solid #ccd0d5;border-radius:6px;padding:8px 12px;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:#65676b;font-weight:600;padding:8px;border-bottom:1px solid #dddfe2;background:#f7f8fa}
+td{padding:7px 8px;border-bottom:1px solid #eceef0;vertical-align:middle}
+.item{display:flex;align-items:center;gap:10px} .item img{width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #dddfe2}
+.nm{font-weight:600} .sub,.muted{color:#65676b;font-size:12px}
+.strike{text-decoration:line-through;color:#8a8d91;font-size:12px;margin-right:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px} .g{background:#31a24c} .o{background:#f7b928}
+.more{font-size:12px;color:#65676b;padding:10px 8px}
+/* ---------- Phone ---------- */
+.phonewrap{width:400px;text-align:center}
+.ptitle{font-weight:700;font-size:15px;margin-bottom:10px;color:#1c2b33}
+.phone{width:380px;margin:0 auto;background:#000;border-radius:44px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.screen{background:#fff;border-radius:32px;overflow:hidden;text-align:left;height:780px}
+.status{display:flex;justify-content:space-between;padding:12px 22px 6px;font-size:13px;font-weight:600}
+.ighead{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-bottom:1px solid #efefef}
+.ighead .logo{font-family:'Segoe Script','Brush Script MT',cursive;font-size:24px}
+.post{padding:10px 12px;display:flex;align-items:center;gap:10px}
+.av{width:34px;height:34px;border-radius:50%;background:#1c2b33;color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid #e1306c}
+.pn{font-weight:700;font-size:14px} .sp{font-size:12px;color:#737373}
+.carousel{display:flex;gap:6px;overflow:hidden;padding-left:12px}
+.slide{min-width:250px;width:250px;border:1px solid #efefef;border-radius:6px;overflow:hidden;background:#fff}
+.slide img{width:250px;height:290px;object-fit:cover;display:block}
+.cap{padding:8px 10px} .ct{font-weight:600;font-size:13px} .cp{font-size:13px;margin-top:2px} .cp s{color:#8e8e8e;font-size:12px;margin-left:4px}
+.shop{margin:0 10px 10px;background:#efefef;border-radius:6px;text-align:center;font-weight:600;font-size:13px;padding:7px}
+.acts{display:flex;gap:16px;padding:10px 14px;font-size:22px}
+.likes{padding:0 14px;font-size:13px;font-weight:600}
+.text{padding:4px 14px;font-size:13px} .text b{margin-right:4px}
+.steps{margin:14px auto 0;width:380px;text-align:left;font-size:13px;background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.steps b{display:block;margin-bottom:4px}
+</style></head><body>
+<div class="label"><b>Illustration</b> built from DRIFT's live product feed. Meta's real screens look very similar; the products, photos and prices are exactly what Meta will import.</div>
+<div class="cols">
+ <div class="cm">
+  <div class="nav">
+    <div class="cat"><div class="ic">D</div><div><div class="n">DRIFT</div><div class="s">E-commerce catalogue</div></div></div>
+    <a>Overview</a><a class="on">Catalogue</a><a>Orders</a><a>Insights</a>
+    <div class="sec">Catalogue</div>
+    <a class="on">Items</a><a>Sets</a><a>Data sources</a><a>Events</a><a>Issues</a><a>Settings</a>
+  </div>
+  <div class="pane">
+    <div class="ph1"><h2>Items</h2><div><span class="btn2">Filter</span><span class="btn">Add items</span></div></div>
+    <div class="banner">✓ Data feed connected: <b>www.driftpk.com/feeds/meta-catalog</b> · Updates daily · Last upload successful</div>
+    <div class="tiles">
+      <div class="tile"><b>6</b><span>Products</span></div>
+      <div class="tile"><b>25</b><span>Items (each colour + size)</span></div>
+      <div class="tile"><b>PKR</b><span>Currency</span></div>
+      <div class="tile"><b style="color:#31a24c">Connected</b><span>DRIFT pixel</span></div>
+    </div>
+    <div class="tools"><div class="search">🔍  Search items by name or ID</div><div class="filter">Sort: Recently updated ▾</div></div>
+    <table><tr><th></th><th>Item</th><th>Price</th><th>Status</th><th>Inventory</th><th>Source</th></tr>
+    <tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-tenet-hoodie%2Fnavy%2Fmodel-men%2Fhq-03.webp" alt=""><div><div class="nm">Drift Tenet Hoodie - Navy</div><div class="sub">Size S · drift-tenet-hoodie-navy-s</div></div></td>
+      <td><span class="strike">Rs 5,625</span> Rs 4,499</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-tenet-hoodie%2Fnavy%2Fmodel-men%2Fhq-03.webp" alt=""><div><div class="nm">Drift Tenet Hoodie - Navy</div><div class="sub">Size M · drift-tenet-hoodie-navy-m</div></div></td>
+      <td><span class="strike">Rs 5,625</span> Rs 4,499</td><td><span class="dot g"></span>Active</td><td class="muted">8</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-tenet-hoodie%2Fnavy%2Fmodel-men%2Fhq-03.webp" alt=""><div><div class="nm">Drift Tenet Hoodie - Navy</div><div class="sub">Size L · drift-tenet-hoodie-navy-l</div></div></td>
+      <td><span class="strike">Rs 5,625</span> Rs 4,499</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fbe-khabar-hoodie%2Fmaroon%2Fmodel-men%2Fhq-01.webp" alt=""><div><div class="nm">Be Khabar Hoodie - Maroon</div><div class="sub">Size S · be-khabar-hoodie-maroon-s</div></div></td>
+      <td><span class="strike">Rs 6,250</span> Rs 4,999</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fbe-khabar-hoodie%2Fmaroon%2Fmodel-men%2Fhq-01.webp" alt=""><div><div class="nm">Be Khabar Hoodie - Maroon</div><div class="sub">Size M · be-khabar-hoodie-maroon-m</div></div></td>
+      <td><span class="strike">Rs 6,250</span> Rs 4,999</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fbe-khabar-hoodie%2Fmaroon%2Fmodel-men%2Fhq-01.webp" alt=""><div><div class="nm">Be Khabar Hoodie - Maroon</div><div class="sub">Size L · be-khabar-hoodie-maroon-l</div></div></td>
+      <td><span class="strike">Rs 6,250</span> Rs 4,999</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fbrown%2Fmodel-women%2Fhq-04.webp" alt=""><div><div class="nm">Core 400 Hoodie - Brown</div><div class="sub">Size S · core-400-hoodie-brown-s</div></div></td>
+      <td><span class="strike">Rs 4,270</span> Rs 3,399</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fbrown%2Fmodel-women%2Fhq-04.webp" alt=""><div><div class="nm">Core 400 Hoodie - Brown</div><div class="sub">Size M · core-400-hoodie-brown-m</div></div></td>
+      <td><span class="strike">Rs 4,270</span> Rs 3,399</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fbrown%2Fmodel-women%2Fhq-04.webp" alt=""><div><div class="nm">Core 400 Hoodie - Brown</div><div class="sub">Size L · core-400-hoodie-brown-l</div></div></td>
+      <td><span class="strike">Rs 4,270</span> Rs 3,399</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fskin%2Fmodel-women%2Fhq-01.webp" alt=""><div><div class="nm">Core 400 Hoodie - Skin</div><div class="sub">Size S · core-400-hoodie-skin-s</div></div></td>
+      <td><span class="strike">Rs 4,270</span> Rs 3,399</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fskin%2Fmodel-women%2Fhq-01.webp" alt=""><div><div class="nm">Core 400 Hoodie - Skin</div><div class="sub">Size M · core-400-hoodie-skin-m</div></div></td>
+      <td><span class="strike">Rs 4,270</span> Rs 3,399</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fskin%2Fmodel-women%2Fhq-01.webp" alt=""><div><div class="nm">Core 400 Hoodie - Skin</div><div class="sub">Size L · core-400-hoodie-skin-l</div></div></td>
+      <td><span class="strike">Rs 4,270</span> Rs 3,399</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-apex-hoodie%2Fbrown%2Fmodel-men%2Fhq-01.webp" alt=""><div><div class="nm">Drift Apex Hoodie - Brown</div><div class="sub">Size M · drift-apex-hoodie-brown-m</div></div></td>
+      <td><span class="strike">Rs 5,625</span> Rs 4,499</td><td><span class="dot g"></span>Active</td><td class="muted">10</td><td class="muted">Data feed</td></tr><tr>
+      <td><input type="checkbox"></td>
+      <td class="item"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-summit-sweatshirt%2Fskin%2Fmodel-men%2Fhq-02.webp" alt=""><div><div class="nm">Drift Summit Polo shirt - Skin</div><div class="sub">Size S · drift-summit-sweatshirt-skin-s</div></div></td>
+      <td><span class="strike">Rs 3,750</span> Rs 2,999</td><td><span class="dot g"></span>Active</td><td class="muted">9</td><td class="muted">Data feed</td></tr></table>
+    <div class="more">Showing 14 of 25 items</div>
+  </div>
+ </div>
+ <div class="phonewrap">
+  <div class="ptitle">What customers see: catalogue ad on Instagram</div>
+  <div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span>●●● 5G ▮</span></div>
+    <div class="ighead"><span class="logo">Instagram</span><span>♡ &nbsp; ✉</span></div>
+    <div class="post"><div class="av">D</div><div><div class="pn">driftpk</div><div class="sp">Sponsored</div></div></div>
+    <div class="carousel"><div class="slide"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-tenet-hoodie%2Fnavy%2Fmodel-men%2Fhq-03.webp" alt="">
+      <div class="cap"><div class="ct">Drift Tenet Hoodie</div>
+      <div class="cp">Rs 4,499 <s>Rs 5,625</s></div></div>
+      <div class="shop">Shop now</div></div><div class="slide"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fbe-khabar-hoodie%2Fmaroon%2Fmodel-men%2Fhq-01.webp" alt="">
+      <div class="cap"><div class="ct">Be Khabar Hoodie</div>
+      <div class="cp">Rs 4,999 <s>Rs 6,250</s></div></div>
+      <div class="shop">Shop now</div></div><div class="slide"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fcore-400-hoodie%2Fbrown%2Fmodel-women%2Fhq-04.webp" alt="">
+      <div class="cap"><div class="ct">Core 400 Hoodie</div>
+      <div class="cp">Rs 3,399 <s>Rs 4,270</s></div></div>
+      <div class="shop">Shop now</div></div><div class="slide"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-apex-hoodie%2Fbrown%2Fmodel-men%2Fhq-01.webp" alt="">
+      <div class="cap"><div class="ct">Drift Apex Hoodie</div>
+      <div class="cp">Rs 4,499 <s>Rs 5,625</s></div></div>
+      <div class="shop">Shop now</div></div><div class="slide"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-summit-sweatshirt%2Fskin%2Fmodel-men%2Fhq-02.webp" alt="">
+      <div class="cap"><div class="ct">Drift Summit Polo shirt</div>
+      <div class="cp">Rs 2,999 <s>Rs 3,750</s></div></div>
+      <div class="shop">Shop now</div></div><div class="slide"><img src="https://res.cloudinary.com/ravooe7r/image/fetch/w_1200/f_jpg/q_90/https%3A%2F%2Foksrblrjpmkfjvetkosy.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fproduct-images%2Fproducts%2Fdrift-tundra-trousers%2Fblack%2Fmodel-men%2Fhq-01.webp" alt="">
+      <div class="cap"><div class="ct">Drift Tundra Trousers</div>
+      <div class="cp">Rs 2,499 <s>Rs 3,126</s></div></div>
+      <div class="shop">Shop now</div></div></div>
+    <div class="acts">♡ &nbsp;💬 &nbsp;➤</div>
+    
+    <div class="text"><b>driftpk</b>New drop is live. Heavyweight hoodies, made in Pakistan. Tap a piece to shop it.</div>
+  </div></div>
+  <div class="steps"><b>How it works</b>Each card is a product from the catalogue. Meta shows each person the pieces they viewed on driftpk.com, and tapping a card opens that product on the website.</div>
+ </div>
+</div>
+</body></html>
