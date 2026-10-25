@@ -1,0 +1,63 @@
+{%- comment -%} DRIFT search results: big search box, result count, product grid, and matching pages. {%- endcomment -%}
+{%- liquid
+  assign products_found = search.results | where: 'object_type', 'product'
+  assign pages_found = search.results | where: 'object_type', 'page'
+-%}
+<div class="drift-search drift-wrap">
+  <p class="drift-label drift-accent">Search</p>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="drift-search__form">
+    <input type="hidden" name="type" value="product,page">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search hoodies, trousers, colours…" aria-label="Search" autocomplete="off" {% unless search.performed %}autofocus{% endunless %}>
+    <button type="submit" class="drift-btn drift-btn--dark">Search</button>
+  </form>
+
+  {%- if search.performed -%}
+    <p class="drift-search__count">
+      {%- if search.results_count == 0 -%}
+        Nothing found for “{{ search.terms | escape }}”. Try a product name, a colour (e.g. Navy) or a category (e.g. Hoodies).
+      {%- else -%}
+        {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for “{{ search.terms | escape }}”
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+
+  {%- if products_found.size > 0 -%}
+    <div class="drift-grid drift-search__grid">
+      {%- for product in products_found -%}
+        {%- assign eager = false -%}
+        {%- if forloop.index <= 4 -%}{%- assign eager = true -%}{%- endif -%}
+        <div class="drift-grid__item">{%- render 'drift-product-card', product: product, eager: eager -%}</div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if pages_found.size > 0 -%}
+    <div class="drift-search__pages">
+      <p class="drift-label">Pages</p>
+      <ul>
+        {%- for p in pages_found -%}<li><a href="{{ p.url }}">{{ p.title }} →</a></li>{%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  {%- if search.performed == false or search.results_count == 0 -%}
+    <div class="drift-search__suggest">
+      <p class="drift-label">Popular</p>
+      <div class="drift-tabs">
+        {%- for c in section.settings.suggestions -%}
+          <a class="drift-chip drift-chip--link" href="{{ c.url }}">{{ c.title }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT search",
+  "class": "drift-section",
+  "settings": [
+    { "type": "collection_list", "id": "suggestions", "label": "Popular collections (shown before searching)" }
+  ]
+}
+{% endschema %}

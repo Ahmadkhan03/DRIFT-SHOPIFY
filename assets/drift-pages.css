@@ -113,3 +113,31 @@
 .drift-buybar__price { margin: 2px 0 0; font-size: 13px; color: var(--drift-ink-soft); }
 .drift-buybar .drift-btn { height: 44px; padding: 0 20px; }
 @media (min-width: 990px) { .drift-buybar { display: none; } }
+
+/* ---------- Search ---------- */
+.drift-search { padding-block: 40px 96px; }
+@media (min-width: 750px) { .drift-search { padding-top: 64px; } }
+.drift-search__form { display: flex; gap: 8px; margin-top: 16px; max-width: 56rem; border-bottom: 2px solid var(--drift-ink); }
+.drift-search__form input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 8px 0; outline: none; font-family: 'DRIFT Display', sans-serif; font-stretch: 62%; font-variation-settings: 'wdth' 62; font-weight: 900; text-transform: uppercase; font-size: 44px !important; line-height: 1; }
+@media (min-width: 750px) { .drift-search__form input { font-size: 80px !important; } }
+.drift-search__form input::placeholder { color: rgb(17 16 16 / .25); }
+.drift-search__form .drift-btn { align-self: center; }
+.drift-search__count { margin: 20px 0 32px; color: var(--drift-ink-soft); }
+.drift-search__pages { margin-top: 48px; }
+.drift-search__pages ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+.drift-search__pages a { color: var(--drift-ink); text-decoration: none; font-size: 18px; }
+.drift-search__suggest { margin-top: 40px; }
+.drift-search__suggest .drift-tabs { flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.drift-chip--link { display: inline-flex; align-items: center; height: 36px; padding: 0 16px; color: var(--drift-ink); text-decoration: none; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.drift-chip--link:hover { background: var(--drift-ink); color: var(--drift-bone); }
+
+/* ---------- 404 ---------- */
+.drift-404 { position: relative; overflow: hidden; padding: 48px 0 64px; }
+.drift-404__num { margin: 0; font-family: 'DRIFT Display', sans-serif; font-stretch: 62%; font-variation-settings: 'wdth' 62; font-weight: 900; font-size: 52vw; line-height: .8; color: var(--drift-maroon); text-align: center; letter-spacing: -0.02em; user-select: none; }
+@media (min-width: 750px) { .drift-404__num { font-size: 34vw; } }
+.drift-404__body { margin-top: 24px; max-width: 40rem; }
+.drift-404__title { margin: 8px 0 0; font-size: 56px; }
+@media (min-width: 750px) { .drift-404__title { font-size: 80px; } }
+.drift-404__text { margin: 16px 0 0; color: var(--drift-ink-soft); font-size: 17px; }
+.drift-404__links { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px; }
+.drift-404__links a { color: var(--drift-ink); font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }

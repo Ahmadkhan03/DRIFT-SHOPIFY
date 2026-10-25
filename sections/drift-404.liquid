@@ -1,0 +1,28 @@
+{%- comment -%} Branded "page not found": giant 404, a line, buttons and quick links. {%- endcomment -%}
+<div class="drift-404">
+  <p class="drift-404__num" aria-hidden="true">404</p>
+  <div class="drift-404__body drift-wrap">
+    <p class="drift-label drift-accent">Page not found</p>
+    <h1 class="drift-404__title">{{ section.settings.title }}</h1>
+    <p class="drift-404__text">{{ section.settings.text }}</p>
+    <div class="drift-hero__ctas">
+      <a class="drift-btn drift-btn--dark" href="{{ routes.all_products_collection_url }}">Shop all</a>
+      <a class="drift-btn drift-btn--outline" href="{{ routes.root_url }}">Back home</a>
+    </div>
+    <div class="drift-404__links">
+      {%- for c in section.settings.links -%}<a href="{{ c.url }}">{{ c.title }}</a>{%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DRIFT 404",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Lost in the drift" },
+    { "type": "text", "id": "text", "label": "Text", "default": "This page moved or never existed. The good stuff is still here." },
+    { "type": "collection_list", "id": "links", "label": "Quick links" }
+  ]
+}
+{% endschema %}
