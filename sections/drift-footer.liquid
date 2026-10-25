@@ -1,0 +1,106 @@
+{%- comment -%}
+  DRIFT footer: newsletter sign-up, link columns, contact strip, social links,
+  oversized logo on maroon, and the floating WhatsApp button.
+  Link columns: one "Label | /link" per line, so they're easy to edit.
+{%- endcomment -%}
+{%- liquid
+  assign wa_digits = section.settings.whatsapp | remove: '+' | remove: ' ' | remove: '-'
+  assign wa_text = 'Hi DRIFT! I have a question.' | url_encode
+-%}
+<footer class="drift-footer">
+  <div class="drift-footer__top drift-wrap">
+    <div>
+      <p class="drift-label drift-footer__muted">Newsletter</p>
+      <h3 class="drift-footer__title">{{ section.settings.newsletter_title | newline_to_br }}</h3>
+      {%- form 'customer', class: 'drift-footer__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter, footer">
+        {%- if form.posted_successfully? -%}
+          <p class="drift-footer__muted">Thanks. You're on the list ✦</p>
+        {%- else -%}
+          <input type="email" name="contact[email]" required placeholder="Your email" aria-label="Email" autocomplete="email">
+          <button type="submit" aria-label="Subscribe">→</button>
+        {%- endif -%}
+        {%- if form.errors -%}<p class="drift-footer__error">{{ form.errors.translated_fields.email | append: ' ' | append: form.errors.messages.email }}</p>{%- endif -%}
+      {%- endform -%}
+    </div>
+    <div class="drift-footer__cols">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <p class="drift-label drift-footer__muted">{{ block.settings.title }}</p>
+          <ul>
+            {%- assign lines = block.settings.links | newline_to_br | split: '<br />' -%}
+            {%- for line in lines -%}
+              {%- assign parts = line | strip | split: '|' -%}
+              {%- if parts.size == 2 -%}
+                <li><a href="{{ parts[1] | strip }}">{{ parts[0] | strip }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <address class="drift-footer__contact drift-wrap">
+    <span class="drift-footer__strong">{{ shop.name }}</span>
+    {%- if shop.address.address1 != blank -%}
+      <span>{{ shop.address.address1 }}, {{ shop.address.city }}</span>
+    {%- endif -%}
+    {%- if section.settings.phone != blank -%}
+      <a href="tel:{{ section.settings.phone | remove: ' ' }}">Call {{ section.settings.phone }}</a>
+    {%- endif -%}
+    {%- if shop.email != blank -%}<a href="mailto:{{ shop.email }}">{{ shop.email }}</a>{%- endif -%}
+  </address>
+
+  <div class="drift-footer__bottom drift-wrap">
+    <div class="drift-footer__social">
+      {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+      {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+      {%- if wa_digits != blank -%}<a href="https://wa.me/{{ wa_digits }}" target="_blank" rel="noopener">WhatsApp {{ section.settings.whatsapp_display }}</a>{%- endif -%}
+    </div>
+    <p>{{ section.settings.tagline }}</p>
+  </div>
+
+  <div class="drift-footer__logo">
+    {%- if settings.logo_inverse -%}
+      {{ settings.logo_inverse | image_url: width: 1600 | image_tag: alt: shop.name, loading: 'lazy', widths: '600, 1000, 1600', sizes: '90vw' }}
+    {%- else -%}
+      <p class="drift-footer__wordmark">{{ shop.name }}</p>
+    {%- endif -%}
+  </div>
+  <p class="drift-footer__copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}. Made in Pakistan.</p>
+</footer>
+
+{%- if wa_digits != blank and section.settings.show_whatsapp_button and template.name != 'cart' -%}
+  <a class="drift-wa" href="https://wa.me/{{ wa_digits }}?text={{ wa_text }}" target="_blank" rel="noopener" aria-label="Chat with {{ shop.name }} on WhatsApp">
+    {%- render 'drift-icon', name: 'whatsapp' -%}
+  </a>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DRIFT footer",
+  "class": "drift-section",
+  "settings": [
+    { "type": "textarea", "id": "newsletter_title", "label": "Newsletter title", "default": "Don't miss\nthe next drop" },
+    { "type": "text", "id": "phone", "label": "Phone (shown in footer)", "default": "0371 1322476" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number (international, digits only)", "default": "923711322476" },
+    { "type": "text", "id": "whatsapp_display", "label": "WhatsApp number as shown", "default": "+92 371 1322476" },
+    { "type": "checkbox", "id": "show_whatsapp_button", "label": "Show floating WhatsApp button", "default": true },
+    { "type": "url", "id": "instagram", "label": "Instagram link" },
+    { "type": "url", "id": "tiktok", "label": "TikTok link" },
+    { "type": "text", "id": "tagline", "label": "Bottom line", "default": "Cash on delivery across Pakistan" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Shop" },
+        { "type": "textarea", "id": "links", "label": "Links", "info": "One per line: Label | /link", "default": "Men | /collections/men\nWomen | /collections/women" }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}
