@@ -94,10 +94,11 @@ class DriftProduct extends HTMLElement {
     const stock = this.querySelector('[data-stock]');
     const barBtn = this.querySelector('[data-bar-add]');
     if (!chosen) {
+      const anyLeft = this.variants.some((x) => x.available);
       add.disabled = true;
-      label.textContent = 'Select a size';
+      label.textContent = anyLeft ? 'Select a size' : 'Sold out';
       if (stock) stock.textContent = '';
-      if (barBtn) barBtn.textContent = 'Select size';
+      if (barBtn) barBtn.textContent = anyLeft ? 'Select size' : 'Sold out';
       return;
     }
     add.disabled = !chosen.available;

@@ -28,6 +28,9 @@ document.addEventListener('submit', async (e) => {
     })
   );
 
+  const errorBox = form.querySelector('[data-error]');
+  const showError = (msg) => errorBox?.replaceChildren(document.createTextNode(msg));
+  showError('');
   button?.classList.add('is-loading');
   try {
     const res = await fetch(`${window.Shopify?.routes?.root || '/'}cart/add.js`, {
@@ -40,7 +43,7 @@ document.addEventListener('submit', async (e) => {
     if (!res.ok || data.status) {
       form.dispatchEvent(new CartErrorEvent({ error: data.description || data.message || 'Could not add to bag', code: 'INVALID' }));
       deferred.resolve({ cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart), detail: { didError: true, items: cart.items } });
-      form.querySelector('[data-error]')?.replaceChildren(document.createTextNode(data.description || 'Could not add to bag'));
+      showError(data.description || 'Could not add to bag');
       return;
     }
     deferred.resolve({
@@ -51,6 +54,7 @@ document.addEventListener('submit', async (e) => {
     setTimeout(() => button?.classList.remove('is-added'), 1800);
   } catch (err) {
     deferred.reject(err);
+    showError('Could not add to bag. Check your connection and try again.');
   } finally {
     button?.classList.remove('is-loading');
   }

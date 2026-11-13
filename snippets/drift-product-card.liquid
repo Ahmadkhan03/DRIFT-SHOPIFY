@@ -42,7 +42,13 @@
     assign off = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
   endif
 
-  assign colour_option = product.options_with_values | where: 'name', 'Color' | first
+  assign colour_option = null
+  for o in product.options_with_values
+    assign oname = o.name | downcase | strip
+    if oname == 'color' or oname == 'colour'
+      assign colour_option = o
+    endif
+  endfor
   assign loading = 'lazy'
   if eager
     assign loading = 'eager'

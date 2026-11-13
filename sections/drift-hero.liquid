@@ -17,12 +17,26 @@
       <div class="drift-hero__media">
         {%- assign loading = 'lazy' -%}
         {%- if forloop.first -%}{%- assign loading = 'eager' -%}{%- endif -%}
-        {%- if block.settings.image -%}
-          {%- render 'drift-img', image: block.settings.image, widths: '1200, 1600, 2000, 2600, 3200', sizes: '100vw', alt: block.settings.title, class: 'drift-hero__img drift-hero__img--desktop', loading: loading -%}
-        {%- endif -%}
+        {%- comment -%} One <picture>: phones download only the phone photo, desktops only the desktop one. {%- endcomment -%}
+        {%- assign desktop = block.settings.image | default: block.settings.mobile_image -%}
         {%- assign phone = block.settings.mobile_image | default: block.settings.image -%}
-        {%- if phone -%}
-          {%- render 'drift-img', image: phone, widths: '750, 1100, 1500', sizes: '100vw', alt: block.settings.title, class: 'drift-hero__img drift-hero__img--phone', loading: loading -%}
+        {%- if desktop -%}
+          <picture>
+            {%- liquid
+              assign phone_srcset = ''
+              assign phone_widths = '750,1100,1500' | split: ','
+              for w in phone_widths
+                assign wn = w | plus: 0
+                assign u = phone | image_url: width: wn | append: '&quality=90'
+                assign phone_srcset = phone_srcset | append: u | append: ' ' | append: w | append: 'w'
+                unless forloop.last
+                  assign phone_srcset = phone_srcset | append: ', '
+                endunless
+              endfor
+            -%}
+            <source media="(max-width: 749px)" srcset="{{ phone_srcset }}" sizes="100vw">
+            {%- render 'drift-img', image: desktop, widths: '1200, 1600, 2000, 2600, 3200', sizes: '100vw', alt: block.settings.title, class: 'drift-hero__img', loading: loading -%}
+          </picture>
         {%- endif -%}
       </div>
       <div class="drift-hero__shade"></div>

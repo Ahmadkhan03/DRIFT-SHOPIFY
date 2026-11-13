@@ -19,7 +19,7 @@
     endfor
   endif
 
-  assign sizes_seen = ''
+  assign sizes_seen = ','
 -%}
 <div class="drift-collection">
   <div class="drift-collection__head drift-wrap">
@@ -73,14 +73,25 @@
       {%- for product in collection.products -%}
         {%- liquid
           assign available_sizes = ''
-          for v in product.variants
-            if v.available
-              assign available_sizes = available_sizes | append: '|' | append: v.option2
-              unless sizes_seen contains v.option2
-                assign sizes_seen = sizes_seen | append: ',' | append: v.option2
-              endunless
+          assign size_idx = -1
+          for o in product.options_with_values
+            assign oname = o.name | downcase | strip
+            if oname == 'size'
+              assign size_idx = o.position | minus: 1
             endif
           endfor
+          if size_idx >= 0
+            for v in product.variants
+              if v.available
+                assign vsize = v.options[size_idx]
+                assign available_sizes = available_sizes | append: '|' | append: vsize
+                assign vsize_key = ',' | append: vsize | append: ','
+                unless sizes_seen contains vsize_key
+                  assign sizes_seen = sizes_seen | append: vsize | append: ','
+                endunless
+              endif
+            endfor
+          endif
         -%}
         {%- assign eager = false -%}
         {%- if forloop.index <= 4 -%}{%- assign eager = true -%}{%- endif -%}
@@ -104,7 +115,7 @@
       </nav>
     {%- endif -%}
   {%- endpaginate -%}
-  <script type="application/json" data-size-list>{{ sizes_seen | remove_first: ',' | split: ',' | json }}</script>
+  <script type="application/json" data-size-list>{{ sizes_seen | split: ',' | json }}</script>
 </div>
 
 {% schema %}

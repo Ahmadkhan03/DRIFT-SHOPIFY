@@ -27,9 +27,14 @@
               {%- assign wanted = block.settings[ckey] | downcase -%}
               {%- assign spot_image = spot_product.featured_image -%}
               {%- assign spot_url = spot_product.url -%}
+              {%- assign colour_idx = 0 -%}
+              {%- for o in spot_product.options_with_values -%}
+                {%- assign oname = o.name | downcase | strip -%}
+                {%- if oname == 'color' or oname == 'colour' -%}{%- assign colour_idx = o.position | minus: 1 -%}{%- endif -%}
+              {%- endfor -%}
               {%- if wanted != blank -%}
                 {%- for v in spot_product.variants -%}
-                  {%- assign v_colour = v.option1 | downcase -%}
+                  {%- assign v_colour = v.options[colour_idx] | downcase -%}
                   {%- if v_colour == wanted -%}
                     {%- if v.featured_image -%}{%- assign spot_image = v.featured_image -%}{%- endif -%}
                     {%- assign spot_url = v.url -%}

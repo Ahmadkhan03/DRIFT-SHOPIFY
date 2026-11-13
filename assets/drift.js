@@ -7,7 +7,8 @@ class DriftHero extends HTMLElement {
     this.index = 0;
     this.interval = (Number(this.dataset.interval) || 6) * 1000;
     this.dots.forEach((dot, i) => dot.addEventListener('click', () => this.show(i, true)));
-    if (this.slides.length > 1) this.start();
+    // No auto-advance for people who ask their device for reduced motion
+    if (this.slides.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) this.start();
     // Swipe on phones
     let x0 = null;
     this.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
@@ -36,7 +37,7 @@ class DriftHero extends HTMLElement {
     });
     const dot = this.dots[this.index];
     if (dot) { void dot.offsetWidth; dot.classList.add('is-active'); } // restart the progress bar
-    if (manual) this.start();
+    if (manual && !matchMedia('(prefers-reduced-motion: reduce)').matches) this.start();
   }
 }
 if (!customElements.get('drift-hero')) customElements.define('drift-hero', DriftHero);
@@ -71,6 +72,15 @@ class DriftCountdown extends HTMLElement {
     const pad = (n) => String(n).padStart(2, '0');
     const tick = () => {
       const left = Math.max(0, target - Date.now());
+      if (left === 0) {
+        // Drop has started: swap the zeros for a message instead of a dead clock
+        clearInterval(this.timer);
+        const msg = document.createElement('p');
+        msg.className = 'drift-label drift-countdown__done';
+        msg.textContent = this.dataset.done || 'Out now';
+        this.replaceChildren(msg);
+        return;
+      }
       const v = [Math.floor(left / 864e5), Math.floor(left / 36e5) % 24, Math.floor(left / 6e4) % 60, Math.floor(left / 1e3) % 60];
       cells.forEach((c, i) => (c.textContent = pad(v[i])));
     };

@@ -28,8 +28,7 @@
 .drift-hero__media { position: absolute; inset: 0; }
 .drift-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; transform: scale(1); transition: transform calc(var(--drift-hero-interval) + 1.5s) linear; }
 .drift-hero__slide.is-active .drift-hero__img { transform: scale(1.08); }
-.drift-hero__img--phone { display: none; }
-@media (max-width: 749px) { .drift-hero__img--desktop { display: none; } .drift-hero__img--phone { display: block; } }
+.drift-hero__media picture { position: absolute; inset: 0; }
 .drift-hero__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgb(17 16 16 / .75), rgb(17 16 16 / .1) 55%, rgb(17 16 16 / .25)); }
 .drift-hero__content { position: absolute; inset-inline: 16px; bottom: 72px; }
 @media (min-width: 750px) { .drift-hero__content { inset-inline: 32px; bottom: 96px; } }
@@ -188,6 +187,7 @@
 .drift-drop__title { margin: 12px 0 0; font-size: 72px; color: var(--drift-bone); }
 @media (min-width: 750px) { .drift-drop__title { font-size: 128px; } }
 .drift-countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 28rem; }
+.drift-countdown__done { grid-column: 1 / -1; margin: 0; font-size: 14px; color: var(--drift-bone); }
 .drift-countdown > div { border: 1px solid rgb(244 241 236 / .25); padding: 16px 8px; text-align: center; }
 .drift-countdown .drift-mono { margin: 0; font-size: 30px; }
 @media (min-width: 750px) { .drift-countdown .drift-mono { font-size: 36px; } }

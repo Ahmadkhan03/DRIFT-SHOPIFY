@@ -30,7 +30,7 @@ Until then the Render site stays live and untouched.
 | Old site images | Cloudinary cloud `ravooe7r` (fetch from Supabase) |
 | Domain / DNS | GoDaddy: `www` CNAME → `drift-clothing.onrender.com`, apex A → `216.24.57.1` |
 | Meta Pixel / dataset | `2520234081805155` (business portfolio "Zee Closet") |
-| WhatsApp | +92 327 9122476 |
+| WhatsApp | +92 371 1322476 (wa.me/923711322476) |
 | Vercel | paused until 2026-11-20 (image limit). Don't suggest a second Vercel account — it got blocked. |
 
 ---
