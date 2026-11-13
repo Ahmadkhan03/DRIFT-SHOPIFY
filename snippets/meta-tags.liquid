@@ -120,4 +120,10 @@
     name="description"
     content="{{ page_description | escape }}"
   >
+{% elsif template.name == 'collection' %}
+  {%- comment -%} DRIFT: collections without their own description still get one for Google {%- endcomment -%}
+  <meta
+    name="description"
+    content="Shop {{ collection.title | escape }} at {{ shop.name | escape }}: heavyweight streetwear made in Pakistan. Cash on delivery nationwide, 7-day size exchanges."
+  >
 {% endif %}
