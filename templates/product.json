@@ -73,6 +73,12 @@
             "sizes": "S, M, L",
             "rows": "Waist: 29, 30, 31\nHip: 46, 48, 50\nLength: 39, 40, 41"
           }
+        },
+        "judgeme_reviews": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "product": "{{product}}"
+          }
         }
       },
       "block_order": [
@@ -80,7 +86,8 @@
         "chart_2",
         "chart_3",
         "chart_4",
-        "chart_5"
+        "chart_5",
+        "judgeme_reviews"
       ]
     },
     "more": {
