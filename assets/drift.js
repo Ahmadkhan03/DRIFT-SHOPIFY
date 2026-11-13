@@ -44,6 +44,12 @@ if (!customElements.get('drift-hero')) customElements.define('drift-hero', Drift
 
 class DriftLookbook extends HTMLElement {
   connectedCallback() {
+    // Only run the dot pulse while the lookbook is on screen
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => this.classList.toggle('is-visible', e.isIntersecting)).observe(this);
+    } else {
+      this.classList.add('is-visible');
+    }
     this.addEventListener('click', (e) => {
       const dot = e.target.closest('.drift-spot__dot');
       if (!dot) return;

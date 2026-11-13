@@ -42,13 +42,42 @@
       {%- assign contact_email = section.settings.email | default: shop.email -%}
       <div class="drift-footer__touch">
         <p class="drift-label drift-footer__muted">Get In Touch</p>
-        <ul>
-          {%- if contact_email != blank -%}<li><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></li>{%- endif -%}
-          {%- if section.settings.phone != blank -%}<li><a href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>{%- endif -%}
-          {%- if wa_digits != blank -%}<li><a href="https://wa.me/{{ wa_digits }}" target="_blank" rel="noopener">WhatsApp {{ section.settings.whatsapp_display }}</a></li>{%- endif -%}
-          {%- if section.settings.instagram != blank -%}<li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a></li>{%- endif -%}
-          {%- if section.settings.facebook != blank -%}<li><a href="{{ section.settings.facebook }}" target="_blank" rel="noopener">Facebook</a></li>{%- endif -%}
-          {%- if section.settings.tiktok != blank -%}<li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a></li>{%- endif -%}
+        {%- liquid
+          # Show the handle (e.g. @driftpk.official) instead of a bare "Instagram"
+          assign ig_handle = section.settings.instagram | split: '?' | first | split: '/' | last
+          assign tt_handle = section.settings.tiktok | split: '?' | first | split: '/' | last | remove: '@'
+        -%}
+        <ul class="drift-touch">
+          {%- if wa_digits != blank -%}
+            <li><a class="drift-touch__item" href="https://wa.me/{{ wa_digits }}" target="_blank" rel="noopener">
+              <span class="drift-touch__icon">{%- render 'drift-icon', name: 'whatsapp' -%}</span>
+              <span><small>Call or WhatsApp</small>{{ section.settings.whatsapp_display }}</span>
+            </a></li>
+          {%- endif -%}
+          {%- if contact_email != blank -%}
+            <li><a class="drift-touch__item" href="mailto:{{ contact_email }}">
+              <span class="drift-touch__icon">{%- render 'drift-icon', name: 'mail' -%}</span>
+              <span><small>Email</small>{{ contact_email }}</span>
+            </a></li>
+          {%- endif -%}
+          {%- if section.settings.instagram != blank -%}
+            <li><a class="drift-touch__item" href="{{ section.settings.instagram }}" target="_blank" rel="noopener">
+              <span class="drift-touch__icon">{%- render 'drift-icon', name: 'instagram' -%}</span>
+              <span><small>Instagram</small>@{{ ig_handle }}</span>
+            </a></li>
+          {%- endif -%}
+          {%- if section.settings.facebook != blank -%}
+            <li><a class="drift-touch__item" href="{{ section.settings.facebook }}" target="_blank" rel="noopener">
+              <span class="drift-touch__icon">{%- render 'drift-icon', name: 'facebook' -%}</span>
+              <span><small>Facebook</small>{{ shop.name }}</span>
+            </a></li>
+          {%- endif -%}
+          {%- if section.settings.tiktok != blank -%}
+            <li><a class="drift-touch__item" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">
+              <span class="drift-touch__icon">{%- render 'drift-icon', name: 'tiktok' -%}</span>
+              <span><small>TikTok</small>@{{ tt_handle }}</span>
+            </a></li>
+          {%- endif -%}
         </ul>
       </div>
     </div>
@@ -59,18 +88,14 @@
     {%- if shop.address.address1 != blank -%}
       <span>{{ shop.address.address1 }}, {{ shop.address.city }}</span>
     {%- endif -%}
-    {%- if section.settings.phone != blank -%}
-      <a href="tel:{{ section.settings.phone | remove: ' ' }}">Call {{ section.settings.phone }}</a>
-    {%- endif -%}
-    {%- if shop.email != blank -%}<a href="mailto:{{ shop.email }}">{{ shop.email }}</a>{%- endif -%}
   </address>
 
   <div class="drift-footer__bottom drift-wrap">
     <div class="drift-footer__social">
-      {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
-      {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
-      {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
-      {%- if wa_digits != blank -%}<a href="https://wa.me/{{ wa_digits }}" target="_blank" rel="noopener">WhatsApp {{ section.settings.whatsapp_display }}</a>{%- endif -%}
+      {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'drift-icon', name: 'instagram' -%}</a>{%- endif -%}
+      {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{%- render 'drift-icon', name: 'facebook' -%}</a>{%- endif -%}
+      {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{%- render 'drift-icon', name: 'tiktok' -%}</a>{%- endif -%}
+      {%- if wa_digits != blank -%}<a href="https://wa.me/{{ wa_digits }}" target="_blank" rel="noopener" aria-label="WhatsApp">{%- render 'drift-icon', name: 'whatsapp' -%}</a>{%- endif -%}
     </div>
     <p>{{ section.settings.tagline }}</p>
   </div>

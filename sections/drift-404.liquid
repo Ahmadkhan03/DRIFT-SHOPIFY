@@ -1,4 +1,30 @@
 {%- comment -%} Branded "page not found": giant 404, a line, buttons and quick links. {%- endcomment -%}
+{%- comment -%}
+  Old driftpk.com (pre-Shopify) addresses: send visitors to the matching Shopify page
+  straight away. Real 301 redirects for the main pages are also set in
+  Online Store → Navigation → URL redirects; this catches everything else.
+{%- endcomment -%}
+<script>
+  (function () {
+    var p = location.pathname.replace(/\/+$/, '').toLowerCase() || '/';
+    var pages = {
+      '/shop': '/collections/all', '/men': '/collections/men', '/women': '/collections/women',
+      '/about': '/pages/about', '/contact': '/pages/contact', '/faq': '/pages/faq',
+      '/size-guide': '/pages/size-guide', '/track-order': '/pages/track-order',
+      '/shipping': '/policies/shipping-policy', '/returns': '/policies/refund-policy',
+      '/privacy': '/policies/privacy-policy', '/terms': '/policies/terms-of-service',
+      '/checkout': '/cart'
+    };
+    // Old category names → Shopify collection handles
+    var cats = { hoodies: 'hoodies', sweatshirts: 'polo-shirts', 'polo-shirts': 'polo-shirts', trousers: 'trousers' };
+    var to = pages[p], m;
+    if (!to && (m = p.match(/^\/product\/([^/]+)$/))) to = '/products/' + m[1];
+    if (!to && (m = p.match(/^\/shop\/([^/]+)$/))) to = '/collections/' + (cats[m[1]] || m[1]);
+    if (!to && (m = p.match(/^\/(men|women)\/([^/]+)$/))) to = '/collections/' + m[1] + '/' + (cats[m[2]] || m[2]);
+    if (!to && /^\/order\//.test(p)) to = '/pages/track-order';
+    if (to) location.replace(to + location.search);
+  })();
+</script>
 <div class="drift-404">
   <p class="drift-404__num" aria-hidden="true">404</p>
   <div class="drift-404__body drift-wrap">
