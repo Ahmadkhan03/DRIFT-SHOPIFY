@@ -1,0 +1,21 @@
+{% doc %}
+  Star rating (0–5, half stars) drawn with two layers of ★ so it scales with font size.
+
+  @param {number} rating - Rating out of 5, e.g. 4.6
+  @param {string} [label] - Accessible label; defaults to "Rated X out of 5"
+{% enddoc %}
+{%- liquid
+  assign r = rating | default: 0 | times: 1.0
+  if r > 5
+    assign r = 5
+  endif
+  assign pct = r | divided_by: 5.0 | times: 100 | round: 1
+  assign shown = r | round: 1
+  assign aria = label | default: ''
+  if aria == ''
+    assign aria = 'Rated ' | append: shown | append: ' out of 5'
+  endif
+-%}
+<span class="drift-stars" role="img" aria-label="{{ aria | escape }}" style="--drift-stars: {{ pct }}%;">
+  <span aria-hidden="true">★★★★★</span>
+</span>

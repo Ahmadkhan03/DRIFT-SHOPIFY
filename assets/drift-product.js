@@ -8,7 +8,8 @@ class DriftProduct extends HTMLElement {
     const fromUrl = this.variants.find((v) => String(v.id) === params.get('variant'));
     const first = fromUrl || this.variants.find((v) => v.available) || this.variants[0];
     this.colour = first.colour;
-    this.size = fromUrl ? fromUrl.size : null;
+    // Pre-select the first size in stock so shoppers can add to bag straight away
+    this.size = fromUrl ? fromUrl.size : first.available ? first.size : null;
 
     this.querySelectorAll('button[data-colour]').forEach((b) => b.addEventListener('click', () => this.pickColour(b.dataset.colour)));
     this.querySelectorAll('[data-size]').forEach((b) => b.addEventListener('click', () => this.pickSize(b.dataset.size)));

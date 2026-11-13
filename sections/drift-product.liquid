@@ -83,6 +83,24 @@
         {%- if badge != blank -%}<span class="drift-tag">{{ badge }}</span>{%- endif -%}
       </div>
 
+      {%- comment -%}
+        Star rating under the title. Judge.me (and other review apps) fill the standard
+        reviews.rating / reviews.rating_count product metafields.
+      {%- endcomment -%}
+      {%- assign review_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+      {%- assign app_blocks = section.blocks | where: 'type', '@app' -%}
+      {%- if review_count > 0 or app_blocks.size > 0 -%}
+      <a class="drift-product__rating" href="#drift-reviews">
+        {%- if review_count > 0 -%}
+          {%- render 'drift-stars', rating: product.metafields.reviews.rating.value.rating -%}
+          <span>{{ product.metafields.reviews.rating.value.rating | round: 1 }} · {{ review_count }} review{% if review_count != 1 %}s{% endif %}</span>
+        {%- else -%}
+          {%- render 'drift-stars', rating: 0, label: 'No reviews yet' -%}
+          <span>Be the first to review</span>
+        {%- endif -%}
+      </a>
+      {%- endif -%}
+
       <div class="drift-product__price" data-price>
         {%- if off > 0 -%}<s data-compare>{{ current.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}
         <span data-now>{{ current.price | money_without_trailing_zeros }}</span>
@@ -185,6 +203,21 @@
     <button type="button" class="drift-btn drift-btn--dark" data-bar-add>Add to bag</button>
   </div>
 </drift-product>
+
+{%- comment -%}
+  Customer reviews: the review app's "Reviews widget" app block goes here (theme editor →
+  Product template → DRIFT product → Add block → Apps). It shows reviews and the
+  "Write a review" form.
+{%- endcomment -%}
+{%- if app_blocks.size > 0 -%}
+  <div id="drift-reviews" class="drift-reviews drift-wrap">
+    <div class="drift-reviews__head">
+      <p class="drift-label drift-accent">Reviews</p>
+      <h2 class="drift-reviews__title">What people say</h2>
+    </div>
+    {%- for block in app_blocks -%}{% render block %}{%- endfor -%}
+  </div>
+{%- endif -%}
 <script type="application/ld+json">{{ product | structured_data }}</script>
 
 {% schema %}
@@ -200,6 +233,7 @@
     }
   ],
   "blocks": [
+    { "type": "@app" },
     {
       "type": "chart",
       "name": "Size chart",

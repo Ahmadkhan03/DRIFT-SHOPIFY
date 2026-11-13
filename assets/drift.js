@@ -99,7 +99,7 @@ if (!customElements.get('drift-countdown')) customElements.define('drift-countdo
       }), { rootMargin: '0px 0px -10% 0px' })
     : null;
   const init = (root = document) => {
-    root.querySelectorAll('.drift-rail__head, .drift-tiles__head, .drift-lookbook__head, .drift-editorial__text, .drift-values__item, .drift-drop__body').forEach((el) => {
+    root.querySelectorAll('.drift-rail__head, .drift-tiles__head, .drift-lookbook__head, .drift-editorial__text, .drift-values__item, .drift-drop__body, .drift-testimonials__head, .drift-testimonials__rows').forEach((el) => {
       if (el.classList.contains('drift-reveal')) return;
       el.classList.add('drift-reveal');
       io ? io.observe(el) : el.classList.add('is-in');
@@ -123,3 +123,15 @@ if (!customElements.get('drift-countdown')) customElements.define('drift-countdo
     update();
   }
 })();
+
+/* Reviews rows: hold a finger on the cards to pause them on phones */
+class DriftTestimonials extends HTMLElement {
+  connectedCallback() {
+    const rows = this.querySelector('[data-rows]');
+    if (!rows) return;
+    rows.addEventListener('touchstart', () => rows.classList.add('is-paused'), { passive: true });
+    rows.addEventListener('touchend', () => rows.classList.remove('is-paused'), { passive: true });
+    rows.addEventListener('touchcancel', () => rows.classList.remove('is-paused'), { passive: true });
+  }
+}
+if (!customElements.get('drift-testimonials')) customElements.define('drift-testimonials', DriftTestimonials);

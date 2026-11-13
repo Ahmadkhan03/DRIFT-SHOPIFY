@@ -1,0 +1,142 @@
+{%- comment -%}
+  Customer reviews on the homepage: average rating, then rows of review cards that drift
+  slowly in opposite directions (pause on hover / touch). Each card is a "Review" block —
+  copy real reviews from the review app (Judge.me) or customer messages, with their OK.
+  A review app's carousel can also be added as an app block. Hidden until a review exists.
+{%- endcomment -%}
+{%- liquid
+  assign reviews = section.blocks | where: 'type', 'review'
+  assign app_blocks = section.blocks | where: 'type', '@app'
+  assign total = 0
+  for b in reviews
+    assign total = total | plus: b.settings.rating
+  endfor
+  assign average = 0
+  if reviews.size > 0
+    assign average = total | times: 1.0 | divided_by: reviews.size | round: 1
+  endif
+
+  # Two rows when there are enough cards, so each row has something to scroll
+  assign rows = 1
+  if reviews.size >= 6
+    assign rows = 2
+  endif
+-%}
+{%- if reviews.size > 0 or app_blocks.size > 0 -%}
+<drift-testimonials class="drift-testimonials" style="--drift-t-speed: {{ section.settings.speed }}s;">
+  <div class="drift-testimonials__head drift-wrap">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<p class="drift-label drift-accent">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="drift-rail__title">{{ section.settings.title }}</h2>
+    </div>
+    {%- if reviews.size > 0 -%}
+      <div class="drift-testimonials__score">
+        <p class="drift-testimonials__avg drift-mono">{{ average }}</p>
+        <div>
+          {%- render 'drift-stars', rating: average -%}
+          <p class="drift-label">From {{ reviews.size }} review{% if reviews.size != 1 %}s{% endif %}</p>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if reviews.size > 0 -%}
+    <div class="drift-testimonials__rows" data-rows>
+      {%- for r in (1..rows) -%}
+        <div class="drift-testimonials__row{% if r == 2 %} drift-testimonials__row--reverse{% endif %}">
+          <div class="drift-testimonials__track">
+            {%- comment -%} The list is drawn twice so the loop is seamless; the copy is hidden from screen readers. {%- endcomment -%}
+            {%- for copy in (1..2) -%}
+              <ul class="drift-testimonials__list" {% if copy == 2 %}aria-hidden="true"{% endif %}>
+                {%- for b in reviews -%}
+                  {%- liquid
+                    assign show = true
+                    if rows == 2
+                      assign odd = forloop.index | modulo: 2
+                      if r == 1 and odd == 0
+                        assign show = false
+                      elsif r == 2 and odd == 1
+                        assign show = false
+                      endif
+                    endif
+                  -%}
+                  {%- if show -%}
+                    <li class="drift-quote" {% if copy == 1 %}{{ b.shopify_attributes }}{% endif %}>
+                      <div class="drift-quote__top">
+                        {%- render 'drift-stars', rating: b.settings.rating -%}
+                        {%- if b.settings.verified -%}<span class="drift-quote__verified drift-label">✓ Verified buyer</span>{%- endif -%}
+                      </div>
+                      {%- if b.settings.headline != blank -%}<p class="drift-quote__headline">{{ b.settings.headline }}</p>{%- endif -%}
+                      <blockquote class="drift-quote__text">{{ b.settings.quote }}</blockquote>
+                      <div class="drift-quote__foot">
+                        <p class="drift-quote__name">
+                          <span class="drift-quote__avatar" aria-hidden="true">{{ b.settings.name | slice: 0 | upcase }}</span>
+                          <span>{{ b.settings.name }}{% if b.settings.city != blank %}<small>{{ b.settings.city }}</small>{% endif %}</span>
+                        </p>
+                        {%- assign p = b.settings.product -%}
+                        {%- if p != blank -%}
+                          <a class="drift-quote__product" href="{{ p.url }}" {% if copy == 2 %}tabindex="-1"{% endif %}>
+                            {%- if p.featured_image -%}{%- render 'drift-img', image: p.featured_image, widths: '80, 120', sizes: '40px', alt: '', loading: 'lazy' -%}{%- endif -%}
+                            <span>{{ p.title }}</span>
+                          </a>
+                        {%- endif -%}
+                      </div>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- for block in app_blocks -%}
+    <div class="drift-wrap drift-testimonials__app">{% render block %}</div>
+  {%- endfor -%}
+
+  {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+    <div class="drift-wrap drift-testimonials__cta">
+      <a class="drift-btn drift-btn--outline" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>
+    </div>
+  {%- endif -%}
+</drift-testimonials>
+{%- elsif request.design_mode -%}
+  <div class="drift-wrap drift-testimonials__empty">
+    <p class="drift-label">Customer reviews</p>
+    <p>Add a "Review" block (or your review app's block) to show this section. It stays hidden on the live store until there is at least one review.</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DRIFT reviews",
+  "class": "drift-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small text above", "default": "Reviews" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Worn & rated" },
+    { "type": "range", "id": "speed", "label": "Scroll speed (seconds per loop)", "min": 20, "max": 120, "step": 5, "default": 60 },
+    { "type": "text", "id": "cta_label", "label": "Button text", "default": "Shop the collection" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "paragraph", "content": "Only use real reviews from real customers, with their permission." },
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "headline", "label": "Headline (optional)" },
+        { "type": "textarea", "id": "quote", "label": "Review text" },
+        { "type": "text", "id": "name", "label": "Customer name", "info": "First name and last initial is enough, e.g. Ali R." },
+        { "type": "text", "id": "city", "label": "City (optional)" },
+        { "type": "product", "id": "product", "label": "Product reviewed (optional)" },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "info": "Tick only if they ordered from DRIFT.", "default": true }
+      ]
+    }
+  ],
+  "presets": [{ "name": "DRIFT reviews" }]
+}
+{% endschema %}

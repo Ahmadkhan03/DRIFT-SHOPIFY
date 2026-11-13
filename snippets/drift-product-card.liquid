@@ -75,6 +75,10 @@
   <div class="drift-card__info">
     <div>
       <p class="drift-card__title">{{ product.title }}</p>
+      {%- assign card_reviews = product.metafields.reviews.rating_count.value | default: 0 -%}
+      {%- if card_reviews > 0 -%}
+        <p class="drift-card__rating">{%- render 'drift-stars', rating: product.metafields.reviews.rating.value.rating -%} <span>({{ card_reviews }})</span></p>
+      {%- endif -%}
       {%- if colour_option and colour_option.values.size > 1 -%}
         <p class="drift-card__meta">{{ colour_option.values.size }} colours</p>
       {%- endif -%}

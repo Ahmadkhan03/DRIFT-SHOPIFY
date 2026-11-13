@@ -1,17 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "drift-hero",
-      "settings": {
-        "interval": 6
-      },
       "blocks": {
         "slide_1": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/drift-hero-1.webp",
             "mobile_image": "shopify://shop_images/drift-hero-1-mobile.webp",
-            "eyebrow": "Collection 01 — Men / Women / Unisex",
+            "eyebrow": "Season of Drift — Men / Women / Unisex",
             "title": "Built for the drift",
             "cta1_label": "Shop collection",
             "cta1_link": "shopify://collections/all",
@@ -24,7 +30,7 @@
           "settings": {
             "image": "shopify://shop_images/drift-hero-2.webp",
             "mobile_image": "shopify://shop_images/drift-hero-2-mobile.webp",
-            "eyebrow": "Collection 01 — Men / Women",
+            "eyebrow": "Season of Drift — Men / Women",
             "title": "Made for both",
             "cta1_label": "Shop men",
             "cta1_link": "shopify://collections/men",
@@ -50,13 +56,13 @@
         "slide_1",
         "slide_2",
         "slide_3"
-      ]
+      ],
+      "settings": {
+        "interval": 6
+      }
     },
     "marquee": {
       "type": "drift-marquee",
-      "settings": {
-        "duration": 40
-      },
       "blocks": {
         "w0": {
           "type": "item",
@@ -85,7 +91,7 @@
         "w4": {
           "type": "item",
           "settings": {
-            "text": "Collection 01"
+            "text": "Season of Drift"
           }
         }
       },
@@ -95,7 +101,10 @@
         "w2",
         "w3",
         "w4"
-      ]
+      ],
+      "settings": {
+        "duration": 40
+      }
     },
     "new_arrivals": {
       "type": "drift-product-rail",
@@ -131,14 +140,11 @@
       "block_order": [
         "men",
         "women"
-      ]
+      ],
+      "settings": {}
     },
     "lookbook": {
       "type": "drift-lookbook",
-      "settings": {
-        "eyebrow": "Lookbook",
-        "title": "Wear the drift"
-      },
       "blocks": {
         "look_1": {
           "type": "look",
@@ -226,14 +232,14 @@
         "look_4",
         "look_5",
         "look_6"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Lookbook",
+        "title": "Wear the drift"
+      }
     },
     "collection": {
       "type": "drift-category-tiles",
-      "settings": {
-        "eyebrow": "Shop by category",
-        "title": "The collection"
-      },
       "blocks": {
         "hoodies": {
           "type": "tile",
@@ -267,7 +273,11 @@
         "hoodies",
         "sweatshirts",
         "trousers"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Shop by category",
+        "title": "The collection"
+      }
     },
     "editorial": {
       "type": "drift-editorial",
@@ -339,7 +349,18 @@
         "v1",
         "v2",
         "v3"
-      ]
+      ],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "drift-testimonials",
+      "settings": {
+        "eyebrow": "Reviews",
+        "title": "Worn & rated",
+        "speed": 60,
+        "cta_label": "Shop the collection",
+        "cta_link": "shopify://collections/all"
+      }
     }
   },
   "order": [
@@ -351,6 +372,7 @@
     "collection",
     "editorial",
     "drop",
+    "reviews",
     "promises"
   ]
 }

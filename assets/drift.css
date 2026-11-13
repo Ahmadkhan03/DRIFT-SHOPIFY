@@ -214,3 +214,58 @@
 .drift-reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--drift-ease), transform 1s var(--drift-ease); }
 .drift-reveal.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .drift-reveal { opacity: 1; transform: none; } }
+
+/* Stars (two layers of ★, the top one clipped to the rating) */
+.drift-stars { position: relative; display: inline-block; font-size: 14px; line-height: 1; letter-spacing: 2px; color: rgb(17 16 16 / .18); white-space: nowrap; }
+.drift-stars::before { content: '★★★★★'; position: absolute; inset: 0; width: var(--drift-stars, 0%); overflow: hidden; color: var(--drift-maroon); }
+.drift-product__rating { display: inline-flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 13px; color: var(--drift-muted); text-decoration: none; }
+.drift-product__rating:hover span:last-child { text-decoration: underline; }
+.drift-card__rating { display: flex; align-items: center; gap: 6px; margin: 4px 0 0; font-size: 11px; color: var(--drift-muted); }
+.drift-card__rating .drift-stars { font-size: 11px; letter-spacing: 1px; }
+.drift-reviews { padding-block: 64px; border-top: 1px solid rgb(17 16 16 / .1); scroll-margin-top: 96px; }
+.drift-reviews__title { margin: 8px 0 32px; font-size: 48px; }
+@media (min-width: 750px) { .drift-reviews__title { font-size: 72px; } }
+
+/* Homepage reviews: rows of cards drifting in opposite directions */
+drift-testimonials { display: block; }
+.drift-testimonials { padding-block: 80px; overflow: hidden; }
+.drift-testimonials__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+.drift-testimonials__score { display: flex; align-items: center; gap: 16px; }
+.drift-testimonials__score .drift-label { margin: 6px 0 0; color: var(--drift-muted); }
+.drift-testimonials__score .drift-stars { font-size: 18px; }
+.drift-testimonials__avg { margin: 0; font-size: 56px; line-height: 1; font-weight: 500; }
+.drift-testimonials__rows { display: grid; gap: 16px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.drift-testimonials__track { display: flex; width: max-content; animation: drift-t-scroll var(--drift-t-speed, 60s) linear infinite; }
+.drift-testimonials__row--reverse .drift-testimonials__track { animation-direction: reverse; }
+.drift-testimonials__rows:hover .drift-testimonials__track,
+.drift-testimonials__rows:focus-within .drift-testimonials__track,
+.drift-testimonials__rows.is-paused .drift-testimonials__track { animation-play-state: paused; }
+.drift-testimonials__list { display: flex; gap: 16px; padding: 0 16px 0 0; margin: 0; list-style: none; }
+@keyframes drift-t-scroll { to { transform: translateX(-50%); } }
+
+.drift-quote { display: flex; flex-direction: column; gap: 14px; width: min(82vw, 360px); padding: 24px; background: #fff; border: 1px solid rgb(17 16 16 / .08); transition: transform .5s var(--drift-ease), box-shadow .5s var(--drift-ease), border-color .5s var(--drift-ease); }
+.drift-quote:hover { transform: translateY(-6px); border-color: var(--drift-maroon); box-shadow: 0 18px 40px -24px rgb(92 10 20 / .45); }
+.drift-quote__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.drift-quote__verified { font-size: 10px; color: var(--drift-maroon); }
+.drift-quote__headline { margin: 0; font-family: 'DRIFT Display', system-ui, sans-serif; font-stretch: 62%; font-variation-settings: 'wdth' 62; font-weight: 800; font-size: 22px; line-height: 1; text-transform: uppercase; }
+.drift-quote__text { margin: 0; font-size: 15px; line-height: 1.55; color: var(--drift-ink-soft); flex: 1; }
+.drift-quote__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid rgb(17 16 16 / .08); }
+.drift-quote__name { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 13px; font-weight: 600; }
+.drift-quote__name small { display: block; font-weight: 400; color: var(--drift-muted); }
+.drift-quote__avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--drift-maroon); color: var(--drift-bone); font-size: 13px; }
+.drift-quote__product { display: flex; align-items: center; gap: 8px; max-width: 45%; font-size: 11px; color: var(--drift-muted); text-decoration: none; }
+.drift-quote__product img { width: 32px; height: 40px; object-fit: cover; flex: none; }
+.drift-quote__product span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.drift-quote__product:hover span { text-decoration: underline; }
+.drift-testimonials__cta { margin-top: 40px; text-align: center; }
+.drift-testimonials__app { margin-top: 24px; }
+.drift-testimonials__empty { padding-block: 48px; border: 1px dashed rgb(17 16 16 / .2); text-align: center; }
+
+/* No motion: a plain swipeable row instead */
+@media (prefers-reduced-motion: reduce) {
+  .drift-testimonials__rows { -webkit-mask-image: none; mask-image: none; }
+  .drift-testimonials__row { overflow-x: auto; scroll-snap-type: x mandatory; }
+  .drift-testimonials__track { animation: none; padding-inline: 16px; }
+  .drift-testimonials__list[aria-hidden='true'] { display: none; }
+  .drift-quote { scroll-snap-align: start; }
+}

@@ -1,4 +1,13 @@
 /*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
  * DRIFT template (generated). Safe to edit in the Shopify theme editor.
  */
 {
@@ -12,7 +21,7 @@
         "story_title": "Streetwear that lasts past the trend",
         "story": "<p>DRIFT started with a simple frustration: great streetwear was either imported and overpriced, or local and made to fall apart after a few washes. We wanted pieces that felt premium, fit the way we like to wear them, and were made right here at home.</p><p>So we went back to basics: heavyweight cotton, boxy cuts, clean graphics and details you notice the longer you own them. Every piece is developed and produced in Pakistan, in small runs, so we can get it right.</p><p>The name is the idea. Move at your own pace, find your own lane, and wear something that moves with you.</p>",
         "story_image": "shopify://shop_images/drift-about-story.webp",
-        "cta_eyebrow": "Collection 01",
+        "cta_eyebrow": "Season of Drift",
         "cta_title": "This is only the first drop.",
         "cta_text": "Hoodies, sweatshirts and trousers, cut for men and women alike."
       },
